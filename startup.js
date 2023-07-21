@@ -4,10 +4,8 @@ var navBar = document.getElementById("navBar");
 var alert = document.getElementById("alert");
 
 function signIn(){
-    //var email = document.getElementById("inputEmail").value;
-    //var password = document.getElementById("inputPassword").value;
-    var email = "daniel.giuggioli@gmail.com";
-    var password = "a";
+    var email = document.getElementById("inputEmail").value;
+    var password = document.getElementById("inputPassword").value;
     var found = findUser(email, password);
     if(found){
         dismissAlert();
