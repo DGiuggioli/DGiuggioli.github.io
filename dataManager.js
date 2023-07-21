@@ -57,3 +57,12 @@ function getClientById(id){
     }
     return null;
 }
+
+function deletePrenotationById(id){
+    var prenotations2 = [];
+    for(x = 0; x < prenotations.length; x++){
+        if(prenotations[x].Id != id)
+            prenotations2.push(prenotations[x]);
+    }
+    prenotations = prenotations2;
+}

@@ -53,3 +53,14 @@ function backNewPrenotation(){
     workSpaceDiv.style.display = "block";
     navBar.style.display = "block";
 }
+
+function editPrenotation(id){
+
+}
+
+function deletePrenotation(id){
+    if(window.confirm("Do you really want to delete this prenotation?")){
+        deletePrenotationById(id);
+        uploadDataView();
+    }
+}

@@ -7,6 +7,7 @@ function uploadDataView() {
 }
 
 function uploadNextPrenotations(){
+    nextPrenotationsContainer.innerHTML = "";
     prenotations.forEach(el => {
         var client = getClientById(el.IdClient);
         nextPrenotationsContainer.innerHTML += 
@@ -22,11 +23,11 @@ function uploadNextPrenotations(){
             "<div class='col d-flex justify-content-end'>" +
                 "<div class='row'>" +
                     "<div class='col d-flex align-items-center'>" +
-                        "<div class='m-1'>" +
-                            "<button id='btnEdit" + el.Id + "' class='btn btn-outline-warning btn-sm' onclick='(x) => {edit(x);}'><object data='img/symbol_edit.svg' width='25' height='25'></object></button>" +
+                        "<div class='m-1' onclick='(editPrenotation(\"" + el.Id + "\"))'>" +
+                            "<button id='btnEdit" + el.Id + "' class='btn btn-outline-warning btn-sm'><img src='img/symbol_edit.svg' width='25' height='30'></button>" +
                         "</div>" +
-                        "<div class='m-1'>" +
-                            "<button id='btnDelete" + el.Id + "' class='btn btn-outline-danger btn-sm' onclick='edit(" + el.Id + ")'><object data='img/symbol_delete.svg' width='25' height='25'></object></button>" +
+                        "<div class='m-1' onclick='(deletePrenotation(\"" + el.Id + "\"))'>" +
+                            "<button class='btn btn-outline-danger btn-sm'><img src='img/symbol_delete.svg' width='25' height='30'></button>" +
                         "</div>" +
                     "</div>" +
                 "</div>" +
