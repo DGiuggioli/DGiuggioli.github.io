@@ -24,10 +24,10 @@ function uploadNextPrenotations(){
                 "<div class='row'>" +
                     "<div class='col d-flex align-items-center'>" +
                         "<div class='m-1' onclick='(editPrenotation(\"" + el.Id + "\"))'>" +
-                            "<button id='btnEdit" + el.Id + "' class='btn btn-outline-warning btn-sm'><img src='img/symbol_edit.svg' width='25' height='30'></button>" +
+                            "<button class='btn btn-outline-warning btn-sm' title='Edit'><img src='img/symbol_edit.svg' width='25' height='30'></button>" +
                         "</div>" +
                         "<div class='m-1' onclick='(deletePrenotation(\"" + el.Id + "\"))'>" +
-                            "<button class='btn btn-outline-danger btn-sm'><img src='img/symbol_delete.svg' width='25' height='30'></button>" +
+                            "<button class='btn btn-outline-danger btn-sm' title='Delete'><img src='img/symbol_delete.svg' width='25' height='30'></button>" +
                         "</div>" +
                     "</div>" +
                 "</div>" +

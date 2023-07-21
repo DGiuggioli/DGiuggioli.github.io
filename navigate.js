@@ -2,6 +2,10 @@ var navHome = document.getElementById("navHome");
 var navHistory = document.getElementById("navHistory");
 var navClients = document.getElementById("navClients");
 
+var homeDiv = document.getElementById("home");
+var historyDiv = document.getElementById("history");
+var clientsDiv = document.getElementById("clients");
+
 var newPrenotationBtn = document.getElementById("newPrenotationBtn");
 var newPrenotationDiv = document.getElementById("newPrenotation")
 
@@ -21,26 +25,32 @@ function showHome(){
     navHistory.classList.add('deselected-nav');
     navClients.classList.remove('selected-nav');
     navClients.classList.add('deselected-nav');
+    homeDiv.style.display = "block";
+    historyDiv.style.display = "none";
+    clientsDiv.style.display = "none";
 }
-
 function showHistory(){
-    navHistory.classList.remove('deselected-nav');
-    navHistory.classList.add('selected-nav');
     navHome.classList.remove('selected-nav');
     navHome.classList.add('deselected-nav');
+    navHistory.classList.remove('deselected-nav');
+    navHistory.classList.add('selected-nav');
     navClients.classList.remove('selected-nav');
     navClients.classList.add('deselected-nav');
+    homeDiv.style.display = "none";
+    historyDiv.style.display = "block";
+    clientsDiv.style.display = "none";
 }
-
 function showClients(){
-    navClients.classList.remove('deselected-nav');
-    navClients.classList.add('selected-nav');
     navHome.classList.remove('selected-nav');
     navHome.classList.add('deselected-nav');
     navHistory.classList.remove('selected-nav');
     navHistory.classList.add('deselected-nav');
+    navClients.classList.remove('deselected-nav');
+    navClients.classList.add('selected-nav');
+    homeDiv.style.display = "none";
+    historyDiv.style.display = "none";
+    clientsDiv.style.display = "block";
 }
-
 
 function newPrenotation() {
     workSpaceDiv.style.display = "none";
