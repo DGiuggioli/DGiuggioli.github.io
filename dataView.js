@@ -10,7 +10,7 @@ function uploadNextPrenotations(){
     prenotations.forEach(el => {
         var client = getClientById(el.IdClient);
         nextPrenotationsContainer.innerHTML += 
-        "<div id='" + el.Id + "' class='row border rounded m-3 p-1 nextPrenotationItem'>" +
+        "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 nextPrenotationItem'>" +
             "<div class='col'>" +
                 "<div class='row m-1'>" +
                     "<div class='col'><h3>" + el.WorkDescription + "</h3></div>" +

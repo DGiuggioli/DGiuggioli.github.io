@@ -58,8 +58,8 @@
                                         <div class="col-5">
                                             <label>Password</label>
                                         </div>
-                                        <div id="forgotPassword" class="col">
-                                            <a href="">Forgot password?</a>
+                                        <div class="col text-right">
+                                            <label class="text-link">Forgot password?</label>
                                         </div>
                                     </div>
                                 </div>
@@ -81,40 +81,76 @@
                     <div class="row">
                         <div class="col text-center">
                             <label>New to MyClients?</label> 
-                            <a id="createAccount" href="" onclick="createAnAccount()">Create an account</a>
+                            <label id="createAccount" class="text-link" onclick="createAnAccount()">Create an account</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="workSpace" style="display: none;">
-        <div id="navBar" class="container">
-            <div class="row">
-                <div id="navHome" class="col selected-nav navOption border rounded" onclick="showHome()">
-                    <label class="fw400">Home</label>
-                </div>
-                <div id="navHistory" class="col deselected-nav navOption border rounded" onclick="showHistory()">
-                    <label class="fw400">History</label>
-                </div>
-                <div id="navClients" class="col deselected-nav navOption border rounded" onclick="showClients()">
-                    <label class="fw400">Clients</label>
-                </div>
-            </div>
-        </div>
         <div id="home">
-            <div id="homeMenu" class="container">
-                <div class="row m-2">
+            <div class="container-fluid">
+                <div class="row mt-2 mb-3">
+                    <div class="col-sm">
+                        <h1>Prenotations</h1>
+                    </div>
                     <div class="col">
-                        <button class="btn btn-outline-dark" onclick="newPrenotation()"><label class="fw400">New Prenotation</label></button>
+                        <div id="homeMenu" class="row mt-3">
+                            <div class="col">
+                                <button class="btn btn-outline-dark" onclick="newPrenotation()"><label class="fw400">New Prenotation</label></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="nextPrenotations" class="container">
+            <div id="nextPrenotations" class="container-fluid">
             </div>
         </div>
         <div id="history" style="display:none;">
 
+        </div>
+    </div>
+
+    <div id="navBar" class="container-fluid fixed-bottom" style="display: none;">
+        <div class="row p-2">
+            <div id="navHome" class="col selected-nav navOption border rounded" onclick="showHome()">
+                <div class="row">
+                    <div class="col">
+                        <object data="img/symbol_home.svg" width="30" height="30" class="align-bottom"></object>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="txtSmall-bold">Home</label>
+                    </div>
+                </div>
+            </div>
+            <div id="navHistory" class="col deselected-nav navOption border rounded" onclick="showHistory()">
+                <div class="row">
+                    <div class="col">
+                        <object data="img/symbol_history.svg" width="30" height="30" class="align-bottom"></object>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="txtSmall-bold">History</label>
+                    </div>
+                </div>
+            </div>
+            <div id="navClients" class="col deselected-nav navOption border rounded" onclick="showClients()">
+                <div class="row">
+                    <div class="col ">
+                        <object data="img/symbol_group.svg" width="30" height="30" class="align-bottom"></object>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="txtSmall-bold">Clients</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -171,8 +207,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col m-1">
+                        <div class="col">
                             <select id="inputClient" class="form-select form-select-sm"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1 text-right">
+                            <label class="text-link">+ New client</a>
                         </div>
                     </div>
                 </div>

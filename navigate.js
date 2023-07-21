@@ -44,10 +44,12 @@ function showClients(){
 
 function newPrenotation() {
     workSpaceDiv.style.display = "none";
+    navBar.style.display = "none";
     newPrenotationDiv.style.display = "block";
 }
 
 function backNewPrenotation(){
     newPrenotationDiv.style.display = "none";
     workSpaceDiv.style.display = "block";
+    navBar.style.display = "block";
 }

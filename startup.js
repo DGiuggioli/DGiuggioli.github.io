@@ -1,5 +1,6 @@
 var startingDiv = document.getElementById("starting");
 var workSpaceDiv = document.getElementById("workSpace");
+var navBar = document.getElementById("navBar");
 var alert = document.getElementById("alert");
 
 function signIn(){
@@ -12,6 +13,7 @@ function signIn(){
         dismissAlert();
         startingDiv.style.display = "none";
         workSpaceDiv.style.display = "block";
+        navBar.style.display = "block";
         filterByUserId();
         uploadDataView();
     }
