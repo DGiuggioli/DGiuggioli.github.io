@@ -3,8 +3,19 @@
 }
 
 .navOption {
-    margin: 1%;
-    text-align: center;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-bottom: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7vh;
+}
+
+.center{
+    top: 50%;
+    left: 50%;
 }
 
 .deselected-nav {
@@ -33,7 +44,6 @@
 .center-stretch-container {
     margin-top: 2%;
     width: 23rem;
-    max-height: 100vh;
 }
 
 h1{
@@ -96,8 +106,10 @@ a {
 
 #navBar {
     background-color:white;
+    height: 10vh;
 }
 
 #workSpace {
-    height: 95vh;
+    height: 90vh;
+    overflow-y : auto;
 }
