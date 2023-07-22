@@ -1,18 +1,17 @@
 var startingDiv = document.getElementById("starting");
 var workSpaceDiv = document.getElementById("workSpace");
+var newPrenotationDiv = document.getElementById("newPrenotation");
 var navBar = document.getElementById("navBar");
-var alert = document.getElementById("alert");
+
+var alertLogin = document.getElementById("alertLogin");
 
 function signIn(){
     var email = document.getElementById("inputEmail").value;
     var password = document.getElementById("inputPassword").value;
     var found = findUser(email, password);
     if(found){
-        dismissAlert();
-        startingDiv.style.display = "none";
-        workSpaceDiv.style.display = "block";
-        navBar.style.display = "block";
-        filterByUserId();
+        dismissAlertLogin();
+        showWorkSpaceDivAndNavBar();
         uploadDataView();
     }
     else{
@@ -20,12 +19,19 @@ function signIn(){
     }
 }
 
-function dismissAlert(){
-    alert.style.display = "none";
+function showWorkSpaceDivAndNavBar(){
+    workSpaceDiv.style.display = "block";
+    navBar.style.display = "block";
+    newPrenotationDiv.style.display = "none";
+    startingDiv.style.display = "none";
+}
+
+function dismissAlertLogin(){
+    alertLogin.style.display = "none";
 }
 
 function userNotFound(){
-    alert.style.display = "block";
+    alertLogin.style.display = "block";
 }
 
 function createAnAccount(){

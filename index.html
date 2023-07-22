@@ -27,11 +27,11 @@
                 </div>
             </div>
             <div class="container center-stretch-container">
-                <div id="alert" class="row" style="display: none;">
+                <div id="alertLogin" class="row" style="display: none;">
                     <div class="col">
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             <label>Incorrect email or password</label>
-                            <button class="btn-close" onclick="dismissAlert()"></button>
+                            <button class="btn-close" onclick="dismissAlertLogin()"></button>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,23 @@
                     </div>
                 </div>
             </div>
-            <div id="nextPrenotations" class="container-fluid">
+            <div id="expiredTitle" class="container-fluid">
+                <div class="row m-1">
+                    <div class="col">
+                        <h2>Expired</h2>
+                    </div>
+                </div>
+            </div>
+            <div id="expiredPrenotations" class="container-fluid">
+            </div>
+            <div id="pendingTitle" class="container-fluid">
+                <div class="row m-1">
+                    <div class="col">
+                        <h2>Pending</h2>
+                    </div>
+                </div>
+            </div>
+            <div id="pendingPrenotations" class="container-fluid">
             </div>
         </div>
         <div id="history" style="display:none;">
@@ -121,7 +137,7 @@
             <div id="navHome" class="col selected-nav navOption border rounded" onclick="showHome()">
                 <div class="row">
                     <div class="col">
-                        <object data="img/symbol_home.svg" width="30" height="30" class="align-bottom"></object>
+                        <img src="img/symbol_home.svg" width="30" height="30" class="align-bottom">
                     </div>
                 </div>
                 <div class="row">
@@ -133,7 +149,7 @@
             <div id="navHistory" class="col deselected-nav navOption border rounded" onclick="showHistory()">
                 <div class="row">
                     <div class="col">
-                        <object data="img/symbol_history.svg" width="30" height="30" class="align-bottom"></object>
+                        <img src="img/symbol_history.svg" width="30" height="30" class="align-bottom">
                     </div>
                 </div>
                 <div class="row">
@@ -145,7 +161,7 @@
             <div id="navClients" class="col deselected-nav navOption border rounded" onclick="showClients()">
                 <div class="row">
                     <div class="col ">
-                        <object data="img/symbol_group.svg" width="30" height="30" class="align-bottom"></object>
+                        <img src="img/symbol_group.svg" width="30" height="30" class="align-bottom">
                     </div>
                 </div>
                 <div class="row">
@@ -175,7 +191,23 @@
                     </div>
                     <div class="row">
                         <div class="col m-1">
-                            <input id="inputDate" class="form-control form-control-sm" type="datetime-local" required> 
+                            <input id="inputDate" class="form-control form-control-sm" type="datetime-local"> 
+                        </div>
+                    </div>
+                    <div id="alertDateDanger" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please select a date</label>
+                                <button class="btn-close" onclick="dismissAlertDateDanger()"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="alertDateWarning" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                <label>Please select a future date</label>
+                                <button class="btn-close" onclick="dismissAlertDateWarning()"></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -193,7 +225,15 @@
                     </div>
                     <div class="row">
                         <div class="col m-1">
-                            <input id="inputWorkDescription" class="form-control form-control-sm" type="text" required> 
+                            <input id="inputWorkDescription" class="form-control form-control-sm" type="text"> 
+                        </div>
+                    </div>
+                    <div id="alertWorkDescription" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please define a work description</label>
+                                <button class="btn-close" onclick="dismissAlertWorkDescription()"></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -217,6 +257,14 @@
                     <div class="row">
                         <div class="col m-1 text-right">
                             <label class="text-link">+ New client</a>
+                        </div>
+                    </div>
+                    <div id="alertClient" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please select a client</label>
+                                <button class="btn-close" onclick="dismissAlertClient()"></button>
+                            </div>
                         </div>
                     </div>
                 </div>
