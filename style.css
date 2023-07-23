@@ -3,26 +3,20 @@
 }
 
 .navOption {
-    margin-top: 1vh;
-    margin-left: 1vw;
-    margin-right: 1vw;
-    margin-bottom: 2vh;
+    margin-top: 0.5vh;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    margin-bottom: 1vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 7vh;
+    height: 6.5vh;
 }
 
-.center{
-    top: 50%;
-    left: 50%;
-}
-
-.deselected-nav {
-    background-color: whitesmoke ;
-}
-.selected-nav {
-    background-color: rgb(199, 199, 199) ;
+.workSpaceUpperContainer{
+    position: fixed;
+    top: 0;
+    height: 7.5vh;
 }
 
 .pendingPrenotationItem {
@@ -106,10 +100,11 @@ a {
 
 #navBar {
     background-color:white;
-    height: 10vh;
+    height: 8.5vh;
 }
 
-#workSpace {
-    height: 90vh;
+.body-page {
+    margin-top: 7.5vh;
+    height: 83vh;
     overflow-y : auto;
 }

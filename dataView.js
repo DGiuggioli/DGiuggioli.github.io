@@ -1,5 +1,6 @@
 var expiredPrenotationsContainer = document.getElementById("expiredPrenotations");
 var pendingPrenotationsContainer = document.getElementById("pendingPrenotations");
+var clientsContainer = document.getElementById("clientsContainer");
 var expiredTitle = document.getElementById("expiredTitle");
 var pendingTitle = document.getElementById("pendingTitle");
 
@@ -8,6 +9,7 @@ var selectClients = document.getElementById("inputClient");
 function uploadDataView() {
     uploadExpiredPrenotations();
     uploadPendingPrenotations();
+    uploadClients();
     uploadSelectClients();
 }
 
@@ -85,6 +87,17 @@ function uploadPendingPrenotations(){
         });
     }
     
+}
+
+function uploadClients(){
+    clientsContainer.innerHTML = "";
+    clients.forEach(el =>{
+        clientsContainer.innerHTML +=
+        "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1'>" + 
+            "<div class='col'><h3>" + el.Name + " " + el.Surname + "</h3></div>" +
+            "<div class='col' title='Details'><img src='img/symbol_expand.svg' width='30' height='30'></div>" +
+        "</div>";
+    })
 }
 
 function uploadSelectClients(){
