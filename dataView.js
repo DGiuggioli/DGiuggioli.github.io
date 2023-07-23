@@ -33,14 +33,14 @@ function uploadExpiredPrenotations(){
                 "<div class='col d-flex justify-content-end'>" +
                     "<div class='row'>" +
                         "<div class='col d-flex align-items-center'>" +
-                            "<div class='m-1' onclick='(performedService(\"" + el.Id + "\"))'>" +
-                                "<button class='btn btn-outline-success btn-sm' title='Performed service'><img src='img/symbol_euro.svg' width='25' height='30'></button>" +
+                            "<div class='m-2' onclick='(performedService(\"" + el.Id + "\"))' title='Performed service'>" +
+                                "<img src='img/symbol_addPerformed.svg' width='25' height='30'>" +
                             "</div>" +
-                            "<div class='m-1' onclick='(editPrenotation(\"" + el.Id + "\"))'>" +
-                                "<button class='btn btn-outline-warning btn-sm' title='Edit'><img src='img/symbol_edit.svg' width='25' height='30'></button>" +
+                            "<div class='m-2' onclick='(editPrenotation(\"" + el.Id + "\"))' title='Edit'>" +
+                                "<img src='img/symbol_edit.svg' width='25' height='30'>" +
                             "</div>" +
-                            "<div class='m-1' onclick='(deletePrenotation(\"" + el.Id + "\"))'>" +
-                                "<button class='btn btn-outline-danger btn-sm' title='Delete'><img src='img/symbol_delete.svg' width='25' height='30'></button>" +
+                            "<div class='m-2' onclick='(deletePrenotation(\"" + el.Id + "\"))' title='Delete'>" +
+                                "<img src='img/symbol_delete.svg' width='25' height='30'>" +
                             "</div>" +
                         "</div>" +
                     "</div>" +
@@ -72,11 +72,11 @@ function uploadPendingPrenotations(){
                 "<div class='col d-flex justify-content-end'>" +
                     "<div class='row'>" +
                         "<div class='col d-flex align-items-center'>" +
-                            "<div class='m-1' onclick='(editPrenotation(\"" + el.Id + "\"))'>" +
-                                "<button class='btn btn-outline-warning btn-sm' title='Edit'><img src='img/symbol_edit.svg' width='25' height='30'></button>" +
+                            "<div class='m-1' onclick='(editPrenotation(\"" + el.Id + "\"))' title='Edit'>" +
+                                "<img src='img/symbol_edit.svg' width='25' height='30'>" +
                             "</div>" +
-                            "<div class='m-1' onclick='(deletePrenotation(\"" + el.Id + "\"))'>" +
-                                "<button class='btn btn-outline-danger btn-sm' title='Delete'><img src='img/symbol_delete.svg' width='25' height='30'></button>" +
+                            "<div class='m-2' onclick='(deletePrenotation(\"" + el.Id + "\"))' title='Delete'>" +
+                                "<img src='img/symbol_delete.svg' width='25' height='30'>" +
                             "</div>" +
                         "</div>" +
                     "</div>" +
