@@ -8,6 +8,128 @@
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>MyClients</title>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+        import { getDatabase, ref, set, onValue, get, child } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, browserSessionPersistence, setPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyBZRK9NJNjnKxOoz38uG91ou-ra8tQ0v2s",
+          authDomain: "myclient-c7bdc.firebaseapp.com",
+          projectId: "myclient-c7bdc",
+          storageBucket: "myclient-c7bdc.appspot.com",
+          messagingSenderId: "58224088628",
+          appId: "1:58224088628:web:b3e3e7b7a49d78ab509c61",
+          measurementId: "G-D6MPK0HZN6",
+          databaseURL: "https://myclient-c7bdc-default-rtdb.europe-west1.firebasedatabase.app/",
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+
+        window.uid = null;
+        
+        const auth = getAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                const uid = user.uid;
+                window.uid = user.uid;
+
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+            });
+
+        setPersistence(auth, browserSessionPersistence)
+            .then(() => {
+                // Existing and future Auth states are now persisted in the current
+                // session only. Closing the window would clear any existing state even
+                // if a user forgets to sign out.
+                // ...
+                // New sign-in will be persisted with session persistence.
+                GoogleAuth();
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+
+        function GoogleAuth() {
+            signInWithPopup(getAuth(), provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+
+                window.uid = user.uid;
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+            });
+        }
+
+
+        window.writeData = function (path, data) {
+            set(ref(database, path), data);
+        }
+
+        window.writeClient = function (data, userId) {
+            window.writeData('clients/' + userId + "/" + data.Id, data);
+        }
+
+        window.writeBooking = function (data, userId) {
+            window.writeData('bookings/' + userId + "/" + data.Id, data);
+        }
+
+        window.readData = function (path) {
+            const dbRef = ref(database);
+            get(child(dbRef, path)).then((snapshot) => {
+            if (snapshot.exists()) {
+                console.log(snapshot.val());
+                return snapshot.val();
+            } else {
+                console.log("No data available");
+            }
+            }).catch((error) => {
+            console.error(error);
+            });
+        }
+
+        window.readClients = function (userId) {
+            return window.readData(`clients/${userId}`);
+        }
+
+        window.readBookings = function (userId) {
+            return window.readData(`bookings/${userId}`);
+        }
+
+      </script>
 </head>
 <body>
     <script src="dataManager.js"></script>

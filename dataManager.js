@@ -2,9 +2,9 @@ var users;
 var allPrenotations;
 var allClients;
 var access;
-var user;
 var clients;
 var prenotations;
+var user;
 
 var pendingPrenotations = [];
 var expiredPrenotations = [];
@@ -50,7 +50,7 @@ function findUser(email, password){
     for(x = 0; x < users.length; x++){
         if(users[x].Email == email &&
            users[x].Password == password){
-                user = changeUser(users[x]);
+                changeUser(users[x]);
                 return true;
         }
     }
@@ -134,8 +134,18 @@ function addPrenotation(date, workDescription, clientId){
     updateData();
 }
 
-function addClient(){
-    
+function addClient(clientName, clientSurname, clientEmail, clientBirthYear){
+    const newClient = {
+        Id: newGuid(),
+        Name: clientName,
+        Surname: clientSurname,
+        Email: clientEmail,
+        BirthYear: clientBirthYear
+    }
+    window.writeClient(newClient, window.uid);
+    allClients.push(newClient);
+    filterByUserId();
+    window.readClients(user.Id);
 }
 
 function newGuid(){

@@ -210,16 +210,16 @@ function backNewClient(){
 function addNewClient(){
     dismissAllAlertsNewClient();
     var okClientName = true;
-    var clientName = document.getElementById("inputClientName");
+    var clientName = document.getElementById("inputClientName").value;
     if(clientName == ""){
         showAlertClientName();
         okClientName = false;
     }
-    var clientSurname = document.getElementById("inputClientSurname");
-    var clientEmail = document.getElementById("inputClientEmail");
-    var clientBirthYear = document.getElementById("inputClientBirthYear");
+    var clientSurname = document.getElementById("inputClientSurname").value;
+    var clientEmail = document.getElementById("inputClientEmail").value;
+    var clientBirthYear = document.getElementById("inputClientBirthYear").value;
     if(okClientName){
-        addClient();
+        addClient(clientName, clientSurname, clientEmail, clientBirthYear);
         uploadDataView();
         backNewClient();
     }
