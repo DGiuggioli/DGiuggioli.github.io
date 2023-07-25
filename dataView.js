@@ -68,7 +68,7 @@ function uploadPendingPrenotations(){
                         "<div class='col'><h3>" + el.WorkDescription + "</h3></div>" +
                     "</div>" +
                     "<div class='row mt-1 mb-1'>" +
-                        "<div class='col'><label>" + el.Date + " · " + client.Name + " " + client.Surname + "</label></div>" +
+                        "<div class='col'><label>" + el.Date + "</label> · <label>" + client.Name + " " + client.Surname + "</label></div>" +
                     "</div>" +
                 "</div>" +
                 "<div class='col d-flex justify-content-end'>" +
@@ -93,9 +93,15 @@ function uploadClients(){
     clientsContainer.innerHTML = "";
     clients.forEach(el =>{
         clientsContainer.innerHTML +=
-        "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1'>" + 
+        "<div id='" + el.Id + "' class='row border rounded m-1 mb-2 p-1'>" + 
             "<div class='col'><h3>" + el.Name + " " + el.Surname + "</h3></div>" +
-            "<div class='col' title='Details'><img src='img/symbol_expand.svg' width='30' height='30'></div>" +
+            "<div class='col d-flex justify-content-end'>" +
+                "<div class='m-1' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New prenotation'>" +
+                    "<img src='img/symbol_newPrenotation.svg' width='25' height='30'>" +
+                "</div>" +
+                "<div class='m-1' title='Details'>" +
+                    "<img src='img/symbol_expand.svg' width='25' height='30'>" +
+                "</div>" +
         "</div>";
     })
 }
@@ -105,5 +111,17 @@ function uploadSelectClients(){
     clients.forEach(el => {
         selectClients.innerHTML += 
         "<option value='" + el.Id +"'>" + el.Name + " " + el.Surname + "</option>";
-    })
+    });
+}
+
+function uploadSelectClientsById(id){
+    selectClients.innerHTML = "<option value=''></option>";
+    clients.forEach(el => {
+        selected = "";
+        if(el.Id == id)
+            selected = "selected";
+        selectClients.innerHTML += 
+        "<option value='" + el.Id +"' " + selected + ">" + el.Name + " " + el.Surname + "</option>";
+    });
+    newPrenotation();
 }

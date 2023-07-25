@@ -122,7 +122,7 @@ function deletePrenotationById(id){
     updateData();
 }
 
-function addNewPrenotation(date, workDescription, clientId){
+function addPrenotation(date, workDescription, clientId){
     const newPrenotation = {
         Id: newGuid(),
         IdClient: clientId,
@@ -132,6 +132,10 @@ function addNewPrenotation(date, workDescription, clientId){
     allPrenotations.push(newPrenotation);
     filterPrenotationsByUserId();
     updateData();
+}
+
+function addClient(){
+    
 }
 
 function newGuid(){

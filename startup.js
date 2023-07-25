@@ -1,7 +1,9 @@
 var startingDiv = document.getElementById("starting");
 var workSpaceDiv = document.getElementById("workSpace");
 var newPrenotationDiv = document.getElementById("newPrenotation");
+var newClientDiv = document.getElementById("newClient");
 var navBar = document.getElementById("navBar");
+var workSpaceUpperContainer = document.getElementById("workSpaceUpperContainer");
 
 var alertLogin = document.getElementById("alertLogin");
 
@@ -22,8 +24,16 @@ function signIn(){
 function showWorkSpaceDivAndNavBar(){
     workSpaceDiv.style.display = "block";
     navBar.style.display = "block";
+    workSpaceUpperContainer.style.display = "block";
     newPrenotationDiv.style.display = "none";
+    newClientDiv.style.display = "none";
     startingDiv.style.display = "none";
+}
+
+function hideWorkSpaceAndNavBar(){
+    workSpaceDiv.style.display = "none";
+    navBar.style.display = "none";
+    workSpaceUpperContainer.style.display = "none";
 }
 
 function dismissAlertLogin(){

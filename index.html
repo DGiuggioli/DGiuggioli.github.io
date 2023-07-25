@@ -89,48 +89,48 @@
         </div>
     </div>
 
+    <div id="workSpaceUpperContainer" class="container-fluid" style="display:none;">
+        <div class="row m-1 mt-2">
+            <div id="workSpaceUpperContainerTitle" class="col mt-1">
+            </div>
+            <div id="workSpaceUpperContainerMenu" class="col d-flex justify-content-end mt-2">
+            </div>
+        </div>
+    </div>
     <div id="workSpace" style="display: none;">
         <div id="home">
-            <div class="container-fluid workSpaceUpperContainer">
-                <div class="row m-1 mt-2">
-                    <div class="col m-1">
-                        <h1>Prenotations</h1>
-                    </div>
-                    <div id="homeMenu" class="col d-flex justify-content-end mt-2">
-                        <div class="row">
-                            <div class="col m-1" title="Profile">
-                                <img src="img/symbol_person.svg" width="35" height="35">
-                            </div>
-                            <div class="col m-1" onclick="newPrenotation()" title="New prenotation">
-                                <img src="img/symbol_newPrenotation.svg" width="35" height="35">
-                            </div>
-                        </div>
+            <div id="expiredTitle" class="container-fluid">
+                <div class="row m-2">
+                    <div class="col">
+                        <h2>Expired</h2>
                     </div>
                 </div>
             </div>
-            <div class="body-page">
-                <div id="expiredTitle" class="container-fluid">
-                    <div class="row m-1">
-                        <div class="col">
-                            <h2>Expired</h2>
-                        </div>
+            <div id="expiredPrenotations" class="container"></div>
+            <div id="pendingTitle" class="container-fluid">
+                <div class="row m-2">
+                    <div class="col">
+                        <h2>Pending</h2>
                     </div>
                 </div>
-                <div id="expiredPrenotations" class="container-fluid"></div>
-                <div id="pendingTitle" class="container-fluid">
-                    <div class="row m-1">
-                        <div class="col">
-                            <h2>Pending</h2>
-                        </div>
-                    </div>
-                </div>
-                <div id="pendingPrenotations" class="container-fluid"></div>
             </div>
+            <div id="pendingPrenotations" class="container"></div>
         </div>
         <div id="performedServices" style="display:none;">
 
         </div>
         <div id="clients" style="display:none;">
+            <div id="sortClientsSelectContainer" class="container">
+                <div class="row mt-2 mb-3">
+                    <div class="col">
+                        <select id="selectSortClients" class="form-select form-select-sm">
+                            <option value="Recents" selected>Recents</option>
+                            <option value="Fidelity">Fidelity</option>
+                            <option value="Expense">Expense</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div id="clientsContainer" class="container"></div>
         </div>
     </div>
@@ -150,7 +150,7 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center mt-3">
-                    <h3>Set new prenotation data</h3>
+                    <h3>Add new prenotation</h3>
                 </div>
             </div>
         </div>
@@ -229,7 +229,7 @@
                     </div>
                     <div class="row">
                         <div class="col m-1 text-right">
-                            <label class="text-link">+ New client</a>
+                            <label class="text-link" onclick="newClientFromNewPrenotation()">+ New client</a>
                         </div>
                     </div>
                     <div id="alertClient" class="row p-1" style="display: none;">
@@ -247,7 +247,107 @@
                     <button class="btn btn-outline-primary block-btn" onclick="backNewPrenotation()">Back</button>
                 </dic>
                 <div class="col">
-                    <button class="btn btn-primary block-btn" onclick="setNewPrenotation()">Set</button>
+                    <button class="btn btn-primary block-btn" onclick="addNewPrenotation()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="newClient" style="display:none;">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center mt-3">
+                    <h3>Add new client</h3>
+                </div>
+            </div>
+        </div>
+        <div class="container center-stretch-container">
+            <div class="row">
+                <div class="col mt-1 mb-2">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Name</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputClientName" class="form-control form-control-sm" type="text"> 
+                        </div>
+                    </div>
+                    <div id="alertClientName" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please define a client name</label>
+                                <button class="btn-close" onclick="dismissAlertClientName()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1 mb-2">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Surname</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputClientSurname" class="form-control form-control-sm" type="text"> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1 mb-2">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Email</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputClientEmail" class="form-control form-control-sm" type="email"> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1 mb-3">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Birth year</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <select id="inputClientBirthYear" class="form-select form-select-sm"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <dic class="col">
+                    <button class="btn btn-outline-primary block-btn" onclick="backNewClient()">Back</button>
+                </dic>
+                <div class="col">
+                    <button class="btn btn-primary block-btn" onclick="addNewClient()">Add</button>
                 </div>
             </div>
         </div>

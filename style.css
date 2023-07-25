@@ -13,12 +13,6 @@
     height: 6.5vh;
 }
 
-.workSpaceUpperContainer{
-    position: fixed;
-    top: 0;
-    height: 7.5vh;
-}
-
 .pendingPrenotationItem {
     background-color: whitesmoke ;
 }
@@ -103,8 +97,19 @@ a {
     height: 8.5vh;
 }
 
-.body-page {
-    margin-top: 7.5vh;
-    height: 83vh;
+#workSpaceUpperContainer{
+    position: fixed;
+    top: 0;
+    height: 8vh;
+}
+
+#workSpace {
+    margin-top: 8vh;
+    margin-bottom: 8.5vh;
+    height: 83.5vh;
     overflow-y : auto;
+}
+
+#selectSortClients{
+    width: 20vh;
 }

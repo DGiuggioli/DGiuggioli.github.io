@@ -6,6 +6,8 @@ var homeDiv = document.getElementById("home");
 var performedServicesDiv = document.getElementById("performedServices");
 var clientsDiv = document.getElementById("clients");
 
+var workSpaceUpperContainerTitle = document.getElementById("workSpaceUpperContainerTitle");
+var workSpaceUpperContainerMenu = document.getElementById("workSpaceUpperContainerMenu");
 
 var newPrenotationBtn = document.getElementById("newPrenotationBtn");
 
@@ -13,15 +15,16 @@ var alertDateDanger = document.getElementById("alertDateDanger");
 var alertDateWarning = document.getElementById("alertDateWarning");
 var alertWorkDescription = document.getElementById("alertWorkDescription");
 var alertClient = document.getElementById("alertClient");
-
-let date = new Date(Date.now())
+var alertClientName = document.getElementById("alertClientName");
 
 showHome();
+loadInputClientBirthYearOptions();
 
 function showHome(){
     selectNavHome();
     deselectNavPerformedServices();
     deselectNavClients();
+    upperContainerHome();
     homeDiv.style.display = "block";
     performedServicesDiv.style.display = "none";
     clientsDiv.style.display = "none";
@@ -30,6 +33,7 @@ function showPerformedServices(){
     deselectNavHome();
     selectNavPerformedServices();
     deselectNavClients();
+    upperContainerPerformedServices();
     homeDiv.style.display = "none";
     performedServicesDiv.style.display = "block";
     clientsDiv.style.display = "none";
@@ -38,6 +42,7 @@ function showClients(){
     deselectNavHome();
     deselectNavPerformedServices();
     selectNavClients();
+    upperContainerClients();
     homeDiv.style.display = "none";
     performedServicesDiv.style.display = "none";
     clientsDiv.style.display = "block";
@@ -62,20 +67,55 @@ function deselectNavClients(){
     navClients.innerHTML = "<img src='img/symbol_group.svg' width='40' height='40'>";
 }
 
+function upperContainerHome(){
+    workSpaceUpperContainerTitle.innerHTML = "<h1>Prenotations</h1>";
+    workSpaceUpperContainerMenu.innerHTML = 
+    "<div class='row'>" +
+        "<div class='col m-1' title='Profile'>" +
+            "<img src='img/symbol_person.svg' width='35' height='35'>" +
+        "</div>" +
+        "<div class='col m-1' onclick='newPrenotation()' title='New prenotation'>" +
+            "<img src='img/symbol_newPrenotation.svg' width='35' height='35'>" +
+        "</div>" +
+    "</div>";
+}
+
+function upperContainerPerformedServices(){
+    workSpaceUpperContainerTitle.innerHTML = "<h1>Performed</h1>";
+    workSpaceUpperContainerMenu.innerHTML = 
+    "<div class='row'>" +
+        "<div class='col m-1' title='View stats'>" +
+            "<img src='img/symbol_chart.svg' width='35' height='35'>" +
+        "</div>" +
+        "<div class='col m-1' title='New performed service'>" +
+            "<img src='img/symbol_addPerformed.svg' width='35' height='35'>" +
+        "</div>" +
+    "</div>";
+}
+
+function upperContainerClients(){
+    workSpaceUpperContainerTitle.innerHTML = "<h1>Clients</h1>";
+    workSpaceUpperContainerMenu.innerHTML = 
+    "<div class='row'>" +
+        "<div class='col m-1' onclick='newClient()' title='New client'>" +
+            "<img src='img/symbol_addPerson.svg' width='35' height='35'>" +
+        "</div>" +
+    "</div>";
+}
+
 function newPrenotation() {
-    workSpaceDiv.style.display = "none";
-    navBar.style.display = "none";
+    hideWorkSpaceAndNavBar();
     newPrenotationDiv.style.display = "block";
 }
 
 function backNewPrenotation(){
-    dismissAllAlerts();
-    clearSetInput();
+    dismissAllAlertsNewPrenotation();
+    clearSetInputNewPrenotation();
     showWorkSpaceDivAndNavBar();
 }
 
-function setNewPrenotation(){
-    dismissAllAlerts();
+function addNewPrenotation(){
+    dismissAllAlertsNewPrenotation();
     var okDate = true;
     var okWorkDescription = true;
     var okClient = true;
@@ -103,11 +143,9 @@ function setNewPrenotation(){
         okClient = false;
     }
     if(okDate && okWorkDescription && okClient){
-        dismissAllAlerts();
-        addNewPrenotation(date, workDescription, clientId);
+        addPrenotation(date, workDescription, clientId);
         uploadDataView();
-        showWorkSpaceDivAndNavBar();
-        clearSetInput();
+        backNewPrenotation();
     }
 }
 
@@ -135,17 +173,86 @@ function dismissAlertClient(){
 function showAlertClient(){
     alertClient.style.display = "block";
 }
-function dismissAllAlerts(){
+function dismissAllAlertsNewPrenotation(){
     dismissAlertDateDanger();
     dismissAlertDateWarning();
     dismissAlertWorkDescription();
     dismissAlertClient();
 }
 
-function clearSetInput(){
+function clearSetInputNewPrenotation(){
     document.getElementById("inputDate").value = "";
     document.getElementById("inputWorkDescription").value = "";
     uploadSelectClients();
+}
+
+function newClient(){
+    hideWorkSpaceAndNavBar();
+    newClientDiv.style.display = "block";
+}
+
+var fromNewPrenotation = false;
+function newClientFromNewPrenotation(){
+    fromNewPrenotation = true;
+    newClientDiv.style.display = "block";
+    newPrenotationDiv.style.display = "none";
+}
+
+function backNewClient(){
+    dismissAllAlertsNewClient();
+    clearSetInputNewClient();
+    if(fromNewPrenotation)
+        hideNewClientFromNewPrenotation();
+    else
+        showWorkSpaceDivAndNavBar();
+}
+
+function addNewClient(){
+    dismissAllAlertsNewClient();
+    var okClientName = true;
+    var clientName = document.getElementById("inputClientName");
+    if(clientName == ""){
+        showAlertClientName();
+        okClientName = false;
+    }
+    var clientSurname = document.getElementById("inputClientSurname");
+    var clientEmail = document.getElementById("inputClientEmail");
+    var clientBirthYear = document.getElementById("inputClientBirthYear");
+    if(okClientName){
+        addClient();
+        uploadDataView();
+        backNewClient();
+    }
+}
+
+function hideNewClientFromNewPrenotation(){
+    newClientDiv.style.display = "none";
+    newPrenotationDiv.style.display = "block";
+    fromNewPrenotation = false;
+}
+
+function dismissAlertClientName(){
+    alertClientName.style.display = "none";
+}
+
+function showAlertClientName(){
+    alertClientName.style.display = "block";
+}
+
+function dismissAllAlertsNewClient(){
+    dismissAlertClientName();
+}
+
+function clearSetInputNewClient(){
+
+}
+
+function loadInputClientBirthYearOptions(){
+    var x = document.getElementById("inputClientBirthYear");
+    var year = new Date().getFullYear();
+    x.innerHTML = "<option value=''></option>";
+    for(y = year - 100; y <= year; y++)
+        x.innerHTML += "<option value='" + y + "'>" + y + "</option>";
 }
 
 function performedService(id){
