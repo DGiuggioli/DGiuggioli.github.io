@@ -36,13 +36,14 @@ function setUser(googleUser){
     checkLoggedUser();
 }
 
-function checkLoggedUser(){
-    console.log(window.user);
+async function checkLoggedUser(){
     if(window.user != null){
         showWorkSpaceDivAndNavBar();
-        populate();
+        await populate();
         uploadDataView();
-    }  
+    } 
+    else
+        startingDiv.style.display = "block";
 }
 
 function showWorkSpaceDivAndNavBar(){

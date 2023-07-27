@@ -191,17 +191,17 @@ function newClient(){
     newClientDiv.style.display = "block";
 }
 
-var fromNewPrenotation = false;
-function newClientFromNewPrenotation(){
-    fromNewPrenotation = true;
+var fromNewBooking = false;
+function newClientFromNewBooking(){
+    fromNewBooking = true;
     newClientDiv.style.display = "block";
-    newPrenotationDiv.style.display = "none";
+    newBookingDiv.style.display = "none";
 }
 
 function backNewClient(){
     dismissAllAlertsNewClient();
     clearSetInputNewClient();
-    if(fromNewPrenotation)
+    if(fromNewBooking)
         hideNewClientFromNewBooking();
     else
         showWorkSpaceDivAndNavBar();
@@ -266,7 +266,7 @@ function editBooking(id){
 
 function deleteBooking(id){
     if(window.confirm("Do you really want to delete this prenotation?")){
-        deletePrenotationById(id);
+        removeBooking(id);
         uploadDataView();
     }
 }

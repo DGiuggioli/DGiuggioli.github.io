@@ -12,7 +12,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
-        import { getDatabase, ref, set, onValue, get, child } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+        import { getDatabase, ref, set, update, onValue, get, child } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
         import { getAuth, signInWithRedirect,getRedirectResult, GoogleAuthProvider, browserSessionPersistence, setPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
         // TODO: Add SDKs for Firebase products that you want to use
@@ -83,12 +83,15 @@
             window.writeData('bookings/' + userId + "/" + data.Id, data);
         }
 
-        window.readData = async function (path, list) {
+        window.writePerformedServices = function (data, userId) {
+            window.writeData('performedServices/' + userId + "/" + data.Id, data);
+        }
+
+        window.readData = async function (path) {
             const dbRef = ref(database);
-            get(child(dbRef, path)).then((snapshot) => {
+            return get(child(dbRef, path)).then((snapshot) => {
             if (snapshot.exists()) {
-                list.push(snapshot.val());
-                return snapshot.val();
+                return snapshot;
             }
             }).catch((error) => {
                 console.error(error);
@@ -96,11 +99,29 @@
         }
 
         window.readClients = async function (userId, clients) {
-            return await window.readData(`clients/${userId}`, clients);
+            var readClients = await window.readData(`clients/${userId}`);
+            if(readClients != undefined)
+                readClients.forEach(el =>{clients.push(el.val());})
         }
 
         window.readBookings = async function (userId, bookings) {
-            return await window.readData(`bookings/${userId}`, bookings);
+            var readBookings = await window.readData(`bookings/${userId}`);
+            if(readBookings != undefined)
+                readBookings.forEach(el => {bookings.push(el.val());})
+        }
+
+        window.readPerformedServices = async function (userId, performedServices){
+            var readPerformedServices = await window.readData(`performedServices/${userId}`);
+            if(readPerformedServices != undefined)
+                readPerformedServices.forEach(el => {performedServices.push(el.val());})
+        }
+
+        window.remove = async function (path, key){
+            
+        }
+
+        window.removeBookingFromDb = async function (userId, elId){
+            await window.remove(`performedServices/${userId}/${elId}`, null);
         }
 
       </script>
@@ -108,7 +129,7 @@
 <body>
     <script src="dataManager.js"></script>
 
-    <div id="starting" class="justify-content-center">
+    <div id="starting" class="justify-content-center" style="display:none;">
         <div id="signIn">
             <div class="container">
                 <div class="row">

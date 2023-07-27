@@ -1,5 +1,6 @@
 var clients = [];
 var bookings = [];
+var performedServices = [];
 
 var pendingBookings = [];
 var expiredBookings = [];
@@ -7,7 +8,7 @@ var expiredBookings = [];
 async function populate(){
     await window.readClients(window.user.id, clients);
     await window.readBookings(window.user.id, bookings);
-    console.log(clients);
+    await window.readPerformedServices(window.user.id, performedServices);
     update();
 }
 
@@ -40,6 +41,8 @@ function getTodayDate(){
 
 function separateBookings(){
     var todayDate = getTodayDate();
+    expiredBookings = [];
+    pendingBookings = [];
     for(x = 0; x < bookings.length; x++){
         if(bookings[x].Date < todayDate)
             expiredBookings.push(bookings[x]);
@@ -70,16 +73,15 @@ function getClientById(id){
     return null;
 }
 
-function deletePrenotationById(id){
-    var workingPrenotations = [];
-    for(x = 0; x < allPrenotations.length; x++){
-        if(allPrenotations[x].Id != id){
-            workingPrenotations.push(allPrenotations[x]);
+function deleteBookingById(id){
+    var workingBookings = [];
+    for(x = 0; x < bookings.length; x++){
+        if(bookings[x].Id != id){
+            workingBookings.push(bookings[x]);
         }
     }
-    allPrenotations = workingPrenotations;
-    filterPrenotationsByUserId();
-    updateData();
+    bookings = workingBookings;
+    update();
 }
 
 function addBooking(date, workDescription, clientId){
@@ -94,6 +96,12 @@ function addBooking(date, workDescription, clientId){
     update();
 }
 
+function removeBooking(bookingId){
+    deleteBookingById(bookingId);
+    //window.removeBooking(window.user.id, bookingId);
+    update();
+}
+
 function addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear){
     const newClient = {
         Id: newGuid(),
@@ -105,7 +113,18 @@ function addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, cl
     }
     window.writeClient(newClient, window.user.id);
     clients.push(newClient);
-    window.readClients(user.Id);
+    update();
+}
+
+function addPerformedService(bookingId, price){
+    const newPerformedService = {
+        Id : newGuid(),
+        IdBooking : bookingId,
+        Price : price
+    }
+    window.writePerformedService(newPerformedService, window.user.id);
+    removeBooking(bookingId);
+    performedServicesDiv.push(newPerformedService);
     update();
 }
 

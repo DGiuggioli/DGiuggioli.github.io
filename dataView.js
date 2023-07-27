@@ -1,5 +1,6 @@
 var expiredBookingsContainer = document.getElementById("expiredBookings");
 var pendingBookingsContainer = document.getElementById("pendingBookings");
+var performedServicesContainer = document.getElementById("performedServices");
 var clientsContainer = document.getElementById("clientsContainer");
 var expiredTitle = document.getElementById("expiredTitle");
 var pendingTitle = document.getElementById("pendingTitle");
@@ -89,6 +90,18 @@ function uploadPendingBookings(){
     
 }
 
+function uploadPerformedServices (){
+    performedServicesContainer.innerHTML = "";
+    performedServices.forEach(el => {
+        performedServicesContainer.innerHTML +=
+        "<div class='row'>" +
+            "<div class='col'>" +
+                el.Price +
+            "</div>" +
+        "</div>";
+    })
+}
+
 function uploadClients(){
     clientsContainer.innerHTML = "";
     clients.forEach(el =>{
@@ -96,7 +109,7 @@ function uploadClients(){
         "<div id='" + el.Id + "' class='row border rounded m-1 mb-2 p-1'>" + 
             "<div class='col'><h3>" + el.Name + " " + el.Surname + "</h3></div>" +
             "<div class='col d-flex justify-content-end'>" +
-                "<div class='m-1' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New prenotation'>" +
+                "<div class='m-1' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
                     "<img src='img/symbol_newBooking.svg' width='25' height='30'>" +
                 "</div>" +
                 "<div class='m-1' title='Details'>" +
@@ -123,5 +136,5 @@ function uploadSelectClientsById(id){
         selectClients.innerHTML += 
         "<option value='" + el.Id +"' " + selected + ">" + el.Name + " " + el.Surname + "</option>";
     });
-    newPrenotation();
+    newBooking();
 }
