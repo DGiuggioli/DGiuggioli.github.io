@@ -13,7 +13,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
         import { getDatabase, ref, set, onValue, get, child } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, browserSessionPersistence, setPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+        import { getAuth, signInWithRedirect,getRedirectResult, GoogleAuthProvider, browserSessionPersistence, setPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
@@ -38,51 +38,28 @@
         const provider = new GoogleAuthProvider();
 
         window.uid = null;
+        window.user = null;
         
         const auth = getAuth();
-
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/auth.user
-                const uid = user.uid;
-                window.uid = user.uid;
-
-                // ...
-            } else {
-                // User is signed out
-                // ...
+                setUser(user);
             }
-            });
+        });
 
         setPersistence(auth, browserSessionPersistence)
-            .then(() => {
-                // Existing and future Auth states are now persisted in the current
-                // session only. Closing the window would clear any existing state even
-                // if a user forgets to sign out.
-                // ...
-                // New sign-in will be persisted with session persistence.
-                GoogleAuth();
-            })
             .catch((error) => {
-                // Handle Errors here.
                 const errorCode = error.code;
                 const errorMessage = error.message;
             });
 
-        function GoogleAuth() {
-            signInWithPopup(getAuth(), provider)
+        window.GoogleAuth = function() {
+            signInWithRedirect(auth, provider);
+            getRedirectResult(auth)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-
-                window.uid = user.uid;
-                // IdP data available using getAdditionalUserInfo(result)
-                // ...
-            }).catch((error) => {
+                setUser(result.user);
+            })
+            .catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -93,7 +70,6 @@
                 // ...
             });
         }
-
 
         window.writeData = function (path, data) {
             set(ref(database, path), data);
@@ -107,26 +83,24 @@
             window.writeData('bookings/' + userId + "/" + data.Id, data);
         }
 
-        window.readData = function (path) {
+        window.readData = async function (path, list) {
             const dbRef = ref(database);
             get(child(dbRef, path)).then((snapshot) => {
             if (snapshot.exists()) {
-                console.log(snapshot.val());
+                list.push(snapshot.val());
                 return snapshot.val();
-            } else {
-                console.log("No data available");
             }
             }).catch((error) => {
-            console.error(error);
+                console.error(error);
             });
         }
 
-        window.readClients = function (userId) {
-            return window.readData(`clients/${userId}`);
+        window.readClients = async function (userId, clients) {
+            return await window.readData(`clients/${userId}`, clients);
         }
 
-        window.readBookings = function (userId) {
-            return window.readData(`bookings/${userId}`);
+        window.readBookings = async function (userId, bookings) {
+            return await window.readData(`bookings/${userId}`, bookings);
         }
 
       </script>
@@ -199,6 +173,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="container border rounded m-2 signIn-google" onclick="googleSignIn()">
+                    <div class="row">
+                        <div class="col">
+                            <label>Sign in with Google</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="container border rounded mt-3 newto-box">
                     <div class="row">
                         <div class="col text-center">
@@ -219,6 +200,7 @@
             </div>
         </div>
     </div>
+
     <div id="workSpace" style="display: none;">
         <div id="home">
             <div id="expiredTitle" class="container-fluid">
@@ -228,7 +210,7 @@
                     </div>
                 </div>
             </div>
-            <div id="expiredPrenotations" class="container"></div>
+            <div id="expiredBookings" class="container"></div>
             <div id="pendingTitle" class="container-fluid">
                 <div class="row m-2">
                     <div class="col">
@@ -236,7 +218,7 @@
                     </div>
                 </div>
             </div>
-            <div id="pendingPrenotations" class="container"></div>
+            <div id="pendingBookings" class="container"></div>
         </div>
         <div id="performedServices" style="display:none;">
 
@@ -268,11 +250,11 @@
         </div>
     </div>
 
-    <div id="newPrenotation" style="display:none;">
+    <div id="newBooking" style="display:none;">
         <div class="container">
             <div class="row">
                 <div class="col text-center mt-3">
-                    <h3>Add new prenotation</h3>
+                    <h3>Add new booking</h3>
                 </div>
             </div>
         </div>
@@ -366,10 +348,10 @@
             </div>
             <div class="row mt-4">
                 <dic class="col">
-                    <button class="btn btn-outline-primary block-btn" onclick="backNewPrenotation()">Back</button>
+                    <button class="btn btn-outline-primary block-btn" onclick="backNewBooking()">Back</button>
                 </dic>
                 <div class="col">
-                    <button class="btn btn-primary block-btn" onclick="addNewPrenotation()">Add</button>
+                    <button class="btn btn-primary block-btn" onclick="addNewBooking()">Add</button>
                 </div>
             </div>
         </div>
@@ -442,6 +424,24 @@
                     <div class="row">
                         <div class="col m-1">
                             <input id="inputClientEmail" class="form-control form-control-sm" type="email"> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1 mb-2">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Phone Number</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputClientPhoneNumber" class="form-control form-control-sm" type="tel"> 
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
-var expiredPrenotationsContainer = document.getElementById("expiredPrenotations");
-var pendingPrenotationsContainer = document.getElementById("pendingPrenotations");
+var expiredBookingsContainer = document.getElementById("expiredBookings");
+var pendingBookingsContainer = document.getElementById("pendingBookings");
 var clientsContainer = document.getElementById("clientsContainer");
 var expiredTitle = document.getElementById("expiredTitle");
 var pendingTitle = document.getElementById("pendingTitle");
@@ -7,22 +7,22 @@ var pendingTitle = document.getElementById("pendingTitle");
 var selectClients = document.getElementById("inputClient");
 
 function uploadDataView() {
-    uploadExpiredPrenotations();
-    uploadPendingPrenotations();
+    uploadExpiredBookings();
+    uploadPendingBookings();
     uploadClients();
     uploadSelectClients();
 }
 
-function uploadExpiredPrenotations(){
-    expiredPrenotationsContainer.innerHTML = "";
-    if(expiredPrenotations.length == 0){
+function uploadExpiredBookings(){
+    expiredBookingsContainer.innerHTML = "";
+    if(expiredBookings.length == 0){
         expiredTitle.style.display = "none";
     }
     else{
         expiredTitle.style.display = "block";
-        expiredPrenotations.forEach(el => {
+        expiredBookings.forEach(el => {
             var client = getClientById(el.IdClient);
-            expiredPrenotationsContainer.innerHTML += 
+            expiredBookingsContainer.innerHTML += 
             "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 expiredPrenotationItem'>" +
                 "<div class='col'>" +
                     "<div class='row mt-1 mb-1'>" +
@@ -38,10 +38,10 @@ function uploadExpiredPrenotations(){
                             "<div class='m-2' onclick='(performedService(\"" + el.Id + "\"))' title='Performed service'>" +
                                 "<img src='img/symbol_addPerformed.svg' width='25' height='30'>" +
                             "</div>" +
-                            "<div class='m-2' onclick='(editPrenotation(\"" + el.Id + "\"))' title='Edit'>" +
+                            "<div class='m-2' onclick='(editBooking(\"" + el.Id + "\"))' title='Edit'>" +
                                 "<img src='img/symbol_edit.svg' width='25' height='30'>" +
                             "</div>" +
-                            "<div class='m-2' onclick='(deletePrenotation(\"" + el.Id + "\"))' title='Delete'>" +
+                            "<div class='m-2' onclick='(deleteBooking(\"" + el.Id + "\"))' title='Delete'>" +
                                 "<img src='img/symbol_delete.svg' width='25' height='30'>" +
                             "</div>" +
                         "</div>" +
@@ -52,16 +52,16 @@ function uploadExpiredPrenotations(){
     }
 }
 
-function uploadPendingPrenotations(){
-    pendingPrenotationsContainer.innerHTML = "";
-    if(pendingPrenotations.length == 0){
+function uploadPendingBookings(){
+    pendingBookingsContainer.innerHTML = "";
+    if(pendingBookings.length == 0){
         pendingTitle.style.display = "none";
     }
     else{
         pendingTitle.style.display = "block";
-        pendingPrenotations.forEach(el => {
+        pendingBookings.forEach(el => {
             var client = getClientById(el.IdClient);
-            pendingPrenotationsContainer.innerHTML += 
+            pendingBookingsContainer.innerHTML += 
             "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 pendingPrenotationItem'>" +
                 "<div class='col'>" +
                     "<div class='row mt-1 mb-1'>" +
@@ -74,10 +74,10 @@ function uploadPendingPrenotations(){
                 "<div class='col d-flex justify-content-end'>" +
                     "<div class='row'>" +
                         "<div class='col d-flex align-items-center'>" +
-                            "<div class='m-1' onclick='(editPrenotation(\"" + el.Id + "\"))' title='Edit'>" +
+                            "<div class='m-1' onclick='(editBooking(\"" + el.Id + "\"))' title='Edit'>" +
                                 "<img src='img/symbol_edit.svg' width='25' height='30'>" +
                             "</div>" +
-                            "<div class='m-2' onclick='(deletePrenotation(\"" + el.Id + "\"))' title='Delete'>" +
+                            "<div class='m-2' onclick='(deleteBooking(\"" + el.Id + "\"))' title='Delete'>" +
                                 "<img src='img/symbol_delete.svg' width='25' height='30'>" +
                             "</div>" +
                         "</div>" +
@@ -97,7 +97,7 @@ function uploadClients(){
             "<div class='col'><h3>" + el.Name + " " + el.Surname + "</h3></div>" +
             "<div class='col d-flex justify-content-end'>" +
                 "<div class='m-1' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New prenotation'>" +
-                    "<img src='img/symbol_newPrenotation.svg' width='25' height='30'>" +
+                    "<img src='img/symbol_newBooking.svg' width='25' height='30'>" +
                 "</div>" +
                 "<div class='m-1' title='Details'>" +
                     "<img src='img/symbol_expand.svg' width='25' height='30'>" +

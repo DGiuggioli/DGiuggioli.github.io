@@ -68,14 +68,14 @@ function deselectNavClients(){
 }
 
 function upperContainerHome(){
-    workSpaceUpperContainerTitle.innerHTML = "<h1>Prenotations</h1>";
+    workSpaceUpperContainerTitle.innerHTML = "<h1>Bookings</h1>";
     workSpaceUpperContainerMenu.innerHTML = 
     "<div class='row'>" +
         "<div class='col m-1' title='Profile'>" +
             "<img src='img/symbol_person.svg' width='35' height='35'>" +
         "</div>" +
-        "<div class='col m-1' onclick='newPrenotation()' title='New prenotation'>" +
-            "<img src='img/symbol_newPrenotation.svg' width='35' height='35'>" +
+        "<div class='col m-1' onclick='newBooking()' title='New booking'>" +
+            "<img src='img/symbol_newBooking.svg' width='35' height='35'>" +
         "</div>" +
     "</div>";
 }
@@ -103,19 +103,19 @@ function upperContainerClients(){
     "</div>";
 }
 
-function newPrenotation() {
+function newBooking() {
     hideWorkSpaceAndNavBar();
-    newPrenotationDiv.style.display = "block";
+    newBookingDiv.style.display = "block";
 }
 
-function backNewPrenotation(){
-    dismissAllAlertsNewPrenotation();
-    clearSetInputNewPrenotation();
+function backNewBooking(){
+    dismissAllAlertsNewBooking();
+    clearSetInputNewBooking();
     showWorkSpaceDivAndNavBar();
 }
 
-function addNewPrenotation(){
-    dismissAllAlertsNewPrenotation();
+function addNewBooking(){
+    dismissAllAlertsNewBooking();
     var okDate = true;
     var okWorkDescription = true;
     var okClient = true;
@@ -143,9 +143,9 @@ function addNewPrenotation(){
         okClient = false;
     }
     if(okDate && okWorkDescription && okClient){
-        addPrenotation(date, workDescription, clientId);
+        addBooking(date, workDescription, clientId);
         uploadDataView();
-        backNewPrenotation();
+        backNewBooking();
     }
 }
 
@@ -173,14 +173,14 @@ function dismissAlertClient(){
 function showAlertClient(){
     alertClient.style.display = "block";
 }
-function dismissAllAlertsNewPrenotation(){
+function dismissAllAlertsNewBooking(){
     dismissAlertDateDanger();
     dismissAlertDateWarning();
     dismissAlertWorkDescription();
     dismissAlertClient();
 }
 
-function clearSetInputNewPrenotation(){
+function clearSetInputNewBooking(){
     document.getElementById("inputDate").value = "";
     document.getElementById("inputWorkDescription").value = "";
     uploadSelectClients();
@@ -202,7 +202,7 @@ function backNewClient(){
     dismissAllAlertsNewClient();
     clearSetInputNewClient();
     if(fromNewPrenotation)
-        hideNewClientFromNewPrenotation();
+        hideNewClientFromNewBooking();
     else
         showWorkSpaceDivAndNavBar();
 }
@@ -217,15 +217,16 @@ function addNewClient(){
     }
     var clientSurname = document.getElementById("inputClientSurname").value;
     var clientEmail = document.getElementById("inputClientEmail").value;
+    var clientPhoneNumber = document.getElementById("inputClientPhoneNumber").value;
     var clientBirthYear = document.getElementById("inputClientBirthYear").value;
     if(okClientName){
-        addClient(clientName, clientSurname, clientEmail, clientBirthYear);
+        addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear);
         uploadDataView();
         backNewClient();
     }
 }
 
-function hideNewClientFromNewPrenotation(){
+function hideNewClientFromNewBooking(){
     newClientDiv.style.display = "none";
     newPrenotationDiv.style.display = "block";
     fromNewPrenotation = false;
@@ -259,11 +260,11 @@ function performedService(id){
     
 }
 
-function editPrenotation(id){
+function editBooking(id){
 
 }
 
-function deletePrenotation(id){
+function deleteBooking(id){
     if(window.confirm("Do you really want to delete this prenotation?")){
         deletePrenotationById(id);
         uploadDataView();

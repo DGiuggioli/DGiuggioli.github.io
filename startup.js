@@ -1,6 +1,6 @@
 var startingDiv = document.getElementById("starting");
 var workSpaceDiv = document.getElementById("workSpace");
-var newPrenotationDiv = document.getElementById("newPrenotation");
+var newBookingDiv = document.getElementById("newBooking");
 var newClientDiv = document.getElementById("newClient");
 var navBar = document.getElementById("navBar");
 var workSpaceUpperContainer = document.getElementById("workSpaceUpperContainer");
@@ -21,11 +21,35 @@ function signIn(){
     }
 }
 
+function googleSignIn(){
+    window.GoogleAuth();
+}
+
+function setUser(googleUser){
+    window.user = {
+            id : googleUser.uid,
+            displayName : googleUser.displayName,
+            email : googleUser.email,
+            phoneNumber : googleUser.phoneNumber,
+            photoURL : googleUser.photoURL
+        }
+    checkLoggedUser();
+}
+
+function checkLoggedUser(){
+    console.log(window.user);
+    if(window.user != null){
+        showWorkSpaceDivAndNavBar();
+        populate();
+        uploadDataView();
+    }  
+}
+
 function showWorkSpaceDivAndNavBar(){
     workSpaceDiv.style.display = "block";
     navBar.style.display = "block";
     workSpaceUpperContainer.style.display = "block";
-    newPrenotationDiv.style.display = "none";
+    newBookingDiv.style.display = "none";
     newClientDiv.style.display = "none";
     startingDiv.style.display = "none";
 }

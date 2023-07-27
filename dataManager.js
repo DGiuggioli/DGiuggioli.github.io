@@ -1,48 +1,19 @@
-var users;
-var allPrenotations;
-var allClients;
-var access;
-var clients;
-var prenotations;
-var user;
+var clients = [];
+var bookings = [];
 
-var pendingPrenotations = [];
-var expiredPrenotations = [];
+var pendingBookings = [];
+var expiredBookings = [];
 
-const usersUrl = "data/Users.json";
-const prenotationsUrl = "data/Prenotations.json";
-const clientsUrl = "data/Clients.json";
-const accessUrl = "data/Access.json";
-
-var usersJson = "";
-var prenotationsJson = "";
-var clientsJson = "";
-
-populate();
-
-async function populate() {
-
-    await fetch(usersUrl)
-    .then((res) => res.text())
-    .then((text) => {usersJson = text;})
-
-    await fetch(prenotationsUrl)
-    .then((res) => res.text())
-    .then((text) => {prenotationsJson = text;})
-
-    await fetch(clientsUrl)
-    .then((res) => res.text())
-    .then((text) => {clientsJson = text;})
-
-    users = JSON.parse(usersJson);
-    allClients = JSON.parse(clientsJson);
-    allPrenotations = JSON.parse(prenotationsJson);
+async function populate(){
+    await window.readClients(window.user.id, clients);
+    await window.readBookings(window.user.id, bookings);
+    console.log(clients);
+    update();
 }
 
-function updateData(){
-    usersJson = JSON.stringify(users);
-    prenotationsJson = JSON.stringify(allPrenotations); 
-    clientsJson = JSON.stringify(allClients);
+
+function update(){
+    separateBookings();
 
 }
 
@@ -57,43 +28,32 @@ function findUser(email, password){
     return false;
 }
 
-function changeUser(u){
+/*function changeUser(u){
     user = u;
     filterByUserId();
-}
+}*/
 
-function filterByUserId(){
-    filterClientsByUserId();
-    filterPrenotationsByUserId();
-}
-
-function filterClientsByUserId(){
-    clients = allClients.filter(x => x.IdUser == user.Id);
-}
-
-function filterPrenotationsByUserId(){
-    prenotations = [];
-    prenotations = allPrenotations.filter(x => getClientById(x.IdClient) != null);
-    separatePrenotations();
-    expiredPrenotations = expiredPrenotations.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0);
-    pendingPrenotations = pendingPrenotations.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0);
-}
 
 function getTodayDate(){
     return dateToString(new Date());
 }
 
-function separatePrenotations(){
-    expiredPrenotations = [];
-    pendingPrenotations = [];
+function separateBookings(){
     var todayDate = getTodayDate();
-    for(x = 0; x < prenotations.length; x++){
-        if(prenotations[x].Date < todayDate)
-            expiredPrenotations.push(prenotations[x]);
+    for(x = 0; x < bookings.length; x++){
+        if(bookings[x].Date < todayDate)
+            expiredBookings.push(bookings[x]);
         else
-            pendingPrenotations.push(prenotations[x]);
+            pendingBookings.push(bookings[x]);
     }
+    sortBookings();
 }
+
+function sortBookings(){
+    expiredBookings = expiredBookings.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0);
+    pendingBookings = pendingBookings.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0);
+}
+
 function dateToString(date){
     return date.getFullYear() + "-" + 
     ((date.getMonth() < 10)?"0":"") + (date.getMonth() + 1) + "-" + 
@@ -122,30 +82,31 @@ function deletePrenotationById(id){
     updateData();
 }
 
-function addPrenotation(date, workDescription, clientId){
-    const newPrenotation = {
+function addBooking(date, workDescription, clientId){
+    const newBooking = {
         Id: newGuid(),
         IdClient: clientId,
         Date: date,
         WorkDescription: workDescription
     }
-    allPrenotations.push(newPrenotation);
-    filterPrenotationsByUserId();
-    updateData();
+    window.writeBooking(newBooking, window.user.id);
+    bookings.push(newBooking);
+    update();
 }
 
-function addClient(clientName, clientSurname, clientEmail, clientBirthYear){
+function addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear){
     const newClient = {
         Id: newGuid(),
         Name: clientName,
         Surname: clientSurname,
         Email: clientEmail,
+        phoneNumber: clientPhoneNumber,
         BirthYear: clientBirthYear
     }
-    window.writeClient(newClient, window.uid);
-    allClients.push(newClient);
-    filterByUserId();
+    window.writeClient(newClient, window.user.id);
+    clients.push(newClient);
     window.readClients(user.Id);
+    update();
 }
 
 function newGuid(){
