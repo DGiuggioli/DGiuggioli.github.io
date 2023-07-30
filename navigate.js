@@ -87,7 +87,7 @@ function upperContainerPerformedServices(){
         "<div class='col m-1' title='View stats'>" +
             "<img src='img/symbol_chart.svg' width='35' height='35'>" +
         "</div>" +
-        "<div class='col m-1' title='New performed service'>" +
+        "<div class='col m-1'onclick='newPerformedService()' title='New performed service'>" +
             "<img src='img/symbol_addPerformed.svg' width='35' height='35'>" +
         "</div>" +
     "</div>";
@@ -260,8 +260,46 @@ function loadInputClientBirthYearOptions(){
         x.innerHTML += "<option value='" + y + "'>" + y + "</option>";
 }
 
+function newPerformedService(){
+    hideWorkSpaceAndNavBar();
+    newPerformedServiceDiv.style.display = "block";
+}
+
 function performedService(id){
-    
+    var booking = getBookingById(id);
+    newPerformedService();
+    setNewPerformedServiceBookingData(booking);
+}
+
+function setNewPerformedServiceBookingData(booking){
+    document.getElementById("inputDatePerformedService").disabled = true;
+    document.getElementById("inputDatePerformedService").value = booking.Date;
+    document.getElementById("inputWorkDescriptionPerformedService").disabled = true;
+    document.getElementById("inputWorkDescriptionPerformedService").value = booking.WorkDescription;
+    document.getElementById("inputClientPerformedService").disabled = true;
+    var client = getClientById(booking.IdClient);
+    document.getElementById("inputClientPerformedService").innerHTML = 
+        "<option value='" + client.Id + "'>" + client.Name + " " + client.Surname + "</option>";
+}
+
+function backNewPerformedService(){
+    dismissAllAlertsNewPerformedService();
+    clearSetInputNewPerformedService();
+    showWorkSpaceDivAndNavBar();
+}
+
+
+function dismissAllAlertsNewPerformedService(){
+
+}
+
+function clearSetInputNewPerformedService(){
+    document.getElementById("inputDatePerformedService").disabled = false;
+    document.getElementById("inputDatePerformedService").value = "";
+    document.getElementById("inputWorkDescriptionPerformedService").disabled = false;
+    document.getElementById("inputWorkDescriptionPerformedService").value = "";
+    document.getElementById("inputClientPerformedService").disabled = false;
+    uploadSelectClientsPerformedService();
 }
 
 function editBooking(id){
@@ -273,4 +311,9 @@ function deleteBooking(id){
         removeBooking(id);
         uploadDataView();
     }
+}
+
+function changeSortClients(){
+    var value = document.getElementById(selectSortClients).value;
+    sortClients(value);
 }

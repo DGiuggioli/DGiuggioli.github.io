@@ -73,6 +73,14 @@ function getClientById(id){
     return null;
 }
 
+function getBookingById(id){
+    for(x = 0; x < expiredBookings.length; x++){
+        if(expiredBookings[x].Id == id)
+            return expiredBookings[x];
+    }
+    return null;
+}
+
 function deleteBookingById(id){
     var workingBookings = [];
     for(x = 0; x < bookings.length; x++){
@@ -133,4 +141,16 @@ function newGuid(){
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
       });
+}
+
+function sortClients(value){
+    if(value == "Recents"){
+
+    }
+    else if(value == "Fidelity"){
+
+    }
+    else if(value == "Expense"){
+        
+    }
 }

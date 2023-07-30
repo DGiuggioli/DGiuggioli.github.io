@@ -193,10 +193,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="container border rounded m-2 signIn-google" onclick="googleSignIn()">
+                <div class="container border rounded mt-2 signIn-google p-3" onclick="googleSignIn()">
                     <div class="row">
-                        <div class="col">
-                            <label>Sign in with Google</label>
+                        <div class="col text-center d-flex align-items-center">
+                                <div class="d-inline-flex justify-content-start">
+                                    <img src="img/symbol_google.svg" width="30" height="30">
+                                </div>
+                                <div class="col d-inline-flex justify-content-center">
+                                    <label>Sign in with Google</label>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -245,9 +250,9 @@
         </div>
         <div id="clients" style="display:none;">
             <div id="sortClientsSelectContainer" class="container-fluid">
-                <div class="row mt-2 mb-3">
-                    <div class="col">
-                        <select id="selectSortClients" class="form-select form-select-sm">
+                <div class="row">
+                    <div class="col m-1 mb-3">
+                        <select id="selectSortClients" class="form-select form-select-sm" onchange="changeSortClients()">
                             <option value="Recents" selected>Recents</option>
                             <option value="Fidelity">Fidelity</option>
                             <option value="Expense">Expense</option>
@@ -372,6 +377,100 @@
                 </dic>
                 <div class="col">
                     <button class="btn btn-primary block-btn" onclick="addNewBooking()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="newPerformedService" style="display:none;">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center mt-3">
+                    <h3>Add new performed service</h3>
+                </div>
+            </div>
+        </div>
+        <div class="container center-stretch-container">
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col m-1 mt-3">
+                            <label>Date</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputDatePerformedService" class="form-control form-control-sm" type="datetime-local"> 
+                        </div>
+                    </div>
+                    <div id="alertDatePerformedService" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please select a date</label>
+                                <button class="btn-close" onclick="dismissAlertDatePerformedService()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1 mb-2">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Work description</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputWorkDescriptionPerformedService" class="form-control form-control-sm" type="text"> 
+                        </div>
+                    </div>
+                    <div id="alertWorkDescription" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please define a work description</label>
+                                <button class="btn-close" onclick="dismissAlertWorkDescription()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1 mb-3">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Client</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <select id="inputClientPerformedService" class="form-select form-select-sm"></select>
+                        </div>
+                    </div>
+                    <div id="alertClient" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please select a client</label>
+                                <button class="btn-close" onclick="dismissAlertClient()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <dic class="col">
+                    <button class="btn btn-outline-primary block-btn" onclick="backNewPerformedService()">Back</button>
+                </dic>
+                <div class="col">
+                    <button class="btn btn-primary block-btn" onclick="addNewPerformedService()">Add</button>
                 </div>
             </div>
         </div>

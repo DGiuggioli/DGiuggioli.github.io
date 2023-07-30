@@ -1,6 +1,7 @@
 var startingDiv = document.getElementById("starting");
 var workSpaceDiv = document.getElementById("workSpace");
 var newBookingDiv = document.getElementById("newBooking");
+var newPerformedServiceDiv = document.getElementById("newPerformedService");
 var newClientDiv = document.getElementById("newClient");
 var navBar = document.getElementById("navBar");
 var workSpaceUpperContainer = document.getElementById("workSpaceUpperContainer");
@@ -48,6 +49,7 @@ function showWorkSpaceDivAndNavBar(){
     navBar.style.display = "block";
     workSpaceUpperContainer.style.display = "block";
     newBookingDiv.style.display = "none";
+    newPerformedServiceDiv.style.display = "none";
     newClientDiv.style.display = "none";
     startingDiv.style.display = "none";
 }

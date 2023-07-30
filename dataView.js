@@ -6,12 +6,14 @@ var expiredTitle = document.getElementById("expiredTitle");
 var pendingTitle = document.getElementById("pendingTitle");
 
 var selectClients = document.getElementById("inputClient");
+var selectClientsPerformedService = document.getElementById("inputClientPerformedService");
 
 function uploadDataView() {
     uploadExpiredBookings();
     uploadPendingBookings();
     uploadClients();
     uploadSelectClients();
+    uploadSelectClientsPerformedService()
 }
 
 function uploadExpiredBookings(){
@@ -110,10 +112,7 @@ function uploadClients(){
             "<div class='col'><h3>" + el.Name + " " + el.Surname + "</h3></div>" +
             "<div class='col d-flex justify-content-end'>" +
                 "<div class='m-1' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
-                    "<img src='img/symbol_newBooking.svg' width='25' height='30'>" +
-                "</div>" +
-                "<div class='m-1' title='Details'>" +
-                    "<img src='img/symbol_expand.svg' width='25' height='30'>" +
+                    "<img src='img/symbol_newBooking.svg' width='30' height='30'>" +
                 "</div>" +
         "</div>";
     })
@@ -137,4 +136,12 @@ function uploadSelectClientsById(id){
         "<option value='" + el.Id +"' " + selected + ">" + el.Name + " " + el.Surname + "</option>";
     });
     newBooking();
+}
+
+function uploadSelectClientsPerformedService(){
+    selectClientsPerformedService.innerHTML = "<option value=''></option>";
+    clients.forEach(el => {
+        selectClientsPerformedService.innerHTML += 
+        "<option value='" + el.Id +"'>" + el.Name + " " + el.Surname + "</option>";
+    });
 }
