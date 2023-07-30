@@ -108,12 +108,15 @@ function uploadClients(){
     clientsContainer.innerHTML = "";
     clients.forEach(el =>{
         clientsContainer.innerHTML +=
-        "<div id='" + el.Id + "' class='row border rounded m-1 mb-2 p-1'>" + 
-            "<div class='col'><h3>" + el.Name + " " + el.Surname + "</h3></div>" +
-            "<div class='col d-flex justify-content-end'>" +
-                "<div class='m-1' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
+        "<div id='" + el.Id + "' class='row border rounded p-2 m-2'>" + 
+            "<div class='col d-flex align-items-center p-1'>" +
+                "<div class='d-inline-flex justify-content-start'>" +
+                    "<h3>" + el.Name + " " + el.Surname + "</h3>" +
+                "</div>" +
+                "<div class='col d-inline-flex justify-content-end' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
                     "<img src='img/symbol_newBooking.svg' width='30' height='30'>" +
                 "</div>" +
+            "</div>" +
         "</div>";
     })
 }
