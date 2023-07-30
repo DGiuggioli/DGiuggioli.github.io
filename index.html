@@ -42,9 +42,7 @@
         
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user);
-            }
+            trySetUser(user);
         });
 
         setPersistence(auth, browserSessionPersistence)
@@ -121,7 +119,7 @@
         }
 
         window.removeBookingFromDb = async function (userId, elId){
-            await window.remove(`performedServices/${userId}/${elId}`, null);
+            window.writeData(`bookings/${userId}/${elId}`, null);
         }
 
       </script>
@@ -231,7 +229,7 @@
                     </div>
                 </div>
             </div>
-            <div id="expiredBookings" class="container"></div>
+            <div id="expiredBookings" class="container-fluid"></div>
             <div id="pendingTitle" class="container-fluid">
                 <div class="row m-2">
                     <div class="col">
@@ -239,13 +237,13 @@
                     </div>
                 </div>
             </div>
-            <div id="pendingBookings" class="container"></div>
+            <div id="pendingBookings" class="container-fluid"></div>
         </div>
         <div id="performedServices" style="display:none;">
 
         </div>
         <div id="clients" style="display:none;">
-            <div id="sortClientsSelectContainer" class="container">
+            <div id="sortClientsSelectContainer" class="container-fluid">
                 <div class="row mt-2 mb-3">
                     <div class="col">
                         <select id="selectSortClients" class="form-select form-select-sm">
@@ -256,7 +254,7 @@
                     </div>
                 </div>
             </div>
-            <div id="clientsContainer" class="container"></div>
+            <div id="clientsContainer" class="container-fluid"></div>
         </div>
     </div>
 
@@ -354,7 +352,7 @@
                     </div>
                     <div class="row">
                         <div class="col m-1 text-right">
-                            <label class="text-link" onclick="newClientFromNewPrenotation()">+ New client</a>
+                            <label class="text-link" onclick="newClientFromNewBooking()">+ New client</a>
                         </div>
                     </div>
                     <div id="alertClient" class="row p-1" style="display: none;">

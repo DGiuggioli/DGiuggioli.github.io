@@ -228,8 +228,8 @@ function addNewClient(){
 
 function hideNewClientFromNewBooking(){
     newClientDiv.style.display = "none";
-    newPrenotationDiv.style.display = "block";
-    fromNewPrenotation = false;
+    newBookingDiv.style.display = "block";
+    fromNewBooking = false;
 }
 
 function dismissAlertClientName(){
@@ -245,7 +245,11 @@ function dismissAllAlertsNewClient(){
 }
 
 function clearSetInputNewClient(){
-
+    document.getElementById("inputClientName").value = "";
+    document.getElementById("inputClientSurname").value = "";
+    document.getElementById("inputClientEmail").value = "";
+    document.getElementById("inputClientPhoneNumber").value = "";
+    document.getElementById("inputClientBirthYear").value = "";
 }
 
 function loadInputClientBirthYearOptions(){

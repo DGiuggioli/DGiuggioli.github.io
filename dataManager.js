@@ -98,7 +98,7 @@ function addBooking(date, workDescription, clientId){
 
 function removeBooking(bookingId){
     deleteBookingById(bookingId);
-    //window.removeBooking(window.user.id, bookingId);
+    window.removeBookingFromDb(window.user.id, bookingId);
     update();
 }
 

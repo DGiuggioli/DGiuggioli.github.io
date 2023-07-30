@@ -25,26 +25,23 @@ function googleSignIn(){
     window.GoogleAuth();
 }
 
-function setUser(googleUser){
-    window.user = {
+async function trySetUser(googleUser){
+    if(googleUser != null){
+        window.user = {
             id : googleUser.uid,
             displayName : googleUser.displayName,
             email : googleUser.email,
             phoneNumber : googleUser.phoneNumber,
             photoURL : googleUser.photoURL
         }
-    checkLoggedUser();
-}
-
-async function checkLoggedUser(){
-    if(window.user != null){
         showWorkSpaceDivAndNavBar();
         await populate();
         uploadDataView();
-    } 
+    }
     else
         startingDiv.style.display = "block";
 }
+
 
 function showWorkSpaceDivAndNavBar(){
     workSpaceDiv.style.display = "block";
