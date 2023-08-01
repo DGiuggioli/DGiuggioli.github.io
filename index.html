@@ -82,7 +82,7 @@
             window.writeData('bookings/' + userId + "/" + data.Id, data);
         }
 
-        window.writePerformedServices = function (data, userId) {
+        window.writePerformedService = function (data, userId) {
             window.writeData('performedServices/' + userId + "/" + data.Id, data);
         }
 
@@ -228,6 +228,13 @@
 
     <div id="workSpace" style="display: none;">
         <div id="home">
+            <div id="noBookings" class="container-fluid" style="display:none;">
+                <div class="row">
+                    <div class="col text-center m-5">
+                        <label>No bookings</label>
+                    </div>
+                </div>
+            </div>
             <div id="expiredTitle" class="container-fluid">
                 <div class="row m-2">
                     <div class="col">
@@ -246,7 +253,9 @@
             <div id="pendingBookings" class="container-fluid"></div>
         </div>
         <div id="performedServices" style="display:none;">
+            <div id="performedServicesContainer" class="container-fluid">
 
+            </div>
         </div>
         <div id="clients" style="display:none;">
             <div id="sortClientsSelectContainer" class="container-fluid">
@@ -285,9 +294,40 @@
         </div>
         <div class="container center-stretch-container">
             <div class="row">
-                <div class="col mb-2">
+                <div class="col mt-3">
                     <div class="row">
-                        <div class="col m-1 mt-3">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Client</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <select id="inputClient" class="form-select form-select-sm"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-1 text-right">
+                            <label class="text-link" onclick="newClientFromNewBooking()">+ New client</a>
+                        </div>
+                    </div>
+                    <div id="alertClient" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please select a client</label>
+                                <button class="btn-close" onclick="dismissAlertClient()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="row">
+                        <div class="col m-1">
                             <label>Date</label>
                         </div>
                     </div>
@@ -315,7 +355,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col mt-1 mb-2">
+                <div class="col mb-3">
                     <div class="row">
                         <div class="col m-1">
                             <div class="row">
@@ -327,46 +367,7 @@
                     </div>
                     <div class="row">
                         <div class="col m-1">
-                            <input id="inputWorkDescription" class="form-control form-control-sm" type="text"> 
-                        </div>
-                    </div>
-                    <div id="alertWorkDescription" class="row p-1" style="display: none;">
-                        <div class="col">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <label>Please define a work description</label>
-                                <button class="btn-close" onclick="dismissAlertWorkDescription()"></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col mt-1 mb-3">
-                    <div class="row">
-                        <div class="col m-1">
-                            <div class="row">
-                                <div class="col">
-                                    <label>Client</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <select id="inputClient" class="form-select form-select-sm"></select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m-1 text-right">
-                            <label class="text-link" onclick="newClientFromNewBooking()">+ New client</a>
-                        </div>
-                    </div>
-                    <div id="alertClient" class="row p-1" style="display: none;">
-                        <div class="col">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <label>Please select a client</label>
-                                <button class="btn-close" onclick="dismissAlertClient()"></button>
-                            </div>
+                            <textarea id="inputWorkDescription" class="form-control form-control-sm"></textarea>
                         </div>
                     </div>
                 </div>
@@ -392,55 +393,7 @@
         </div>
         <div class="container center-stretch-container">
             <div class="row">
-                <div class="col mb-2">
-                    <div class="row">
-                        <div class="col m-1 mt-3">
-                            <label>Date</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m-1">
-                            <input id="inputDatePerformedService" class="form-control form-control-sm" type="datetime-local"> 
-                        </div>
-                    </div>
-                    <div id="alertDatePerformedService" class="row p-1" style="display: none;">
-                        <div class="col">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <label>Please select a date</label>
-                                <button class="btn-close" onclick="dismissAlertDatePerformedService()"></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col mt-1 mb-2">
-                    <div class="row">
-                        <div class="col m-1">
-                            <div class="row">
-                                <div class="col">
-                                    <label>Work description</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m-1">
-                            <input id="inputWorkDescriptionPerformedService" class="form-control form-control-sm" type="text"> 
-                        </div>
-                    </div>
-                    <div id="alertWorkDescription" class="row p-1" style="display: none;">
-                        <div class="col">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <label>Please define a work description</label>
-                                <button class="btn-close" onclick="dismissAlertWorkDescription()"></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col mt-1 mb-3">
+                <div class="col mt-3 mb-3">
                     <div class="row">
                         <div class="col m-1">
                             <div class="row">
@@ -460,6 +413,88 @@
                             <div class="alert alert-danger alert-dismissible" role="alert">
                                 <label>Please select a client</label>
                                 <button class="btn-close" onclick="dismissAlertClient()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="row">
+                        <div class="col m-1">
+                            <label>Date</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputDatePerformedService" class="form-control form-control-sm" type="datetime-local"> 
+                        </div>
+                    </div>
+                    <div id="alertDatePerformedServiceDanger" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please select a date</label>
+                                <button class="btn-close" onclick="dismissAlertDatePerformedService()"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="alertDatePerformedserviceWarning" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                <label>Please select a past date</label>
+                                <button class="btn-close" onclick="dismissAlertDateWarning()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Work description</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <textarea id="inputWorkDescriptionPerformedService" class="form-control form-control-sm" type="text"></textarea>
+                        </div>
+                    </div>
+                    <div id="alertWorkDescription" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please define a work description</label>
+                                <button class="btn-close" onclick="dismissAlertWorkDescription()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="row">
+                        <div class="col m-1">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Price</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-1">
+                            <input id="inputPricePerformedService" class="form-control form-control-sm" type="tel"> 
+                        </div>
+                    </div>
+                    <div id="alertPrice" class="row p-1" style="display: none;">
+                        <div class="col">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <label>Please define a price</label>
+                                <button class="btn-close" onclick="dismissAlertPrice()"></button>
                             </div>
                         </div>
                     </div>

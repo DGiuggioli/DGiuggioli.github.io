@@ -13,10 +13,10 @@
     height: 6.5vh;
 }
 
-.pendingPrenotationItem {
+.pendingBookingItem {
     background-color: whitesmoke ;
 }
-.expiredPrenotationItem{
+.expiredBookingItem{
     background-color: lemonchiffon;
 }
 

@@ -1,6 +1,7 @@
 var expiredBookingsContainer = document.getElementById("expiredBookings");
 var pendingBookingsContainer = document.getElementById("pendingBookings");
-var performedServicesContainer = document.getElementById("performedServices");
+var noBookingsDiv = document.getElementById("noBookings");
+var performedServicesContainer = document.getElementById("performedServicesContainer");
 var clientsContainer = document.getElementById("clientsContainer");
 var expiredTitle = document.getElementById("expiredTitle");
 var pendingTitle = document.getElementById("pendingTitle");
@@ -9,11 +10,23 @@ var selectClients = document.getElementById("inputClient");
 var selectClientsPerformedService = document.getElementById("inputClientPerformedService");
 
 function uploadDataView() {
+    uploadBookings()
     uploadExpiredBookings();
     uploadPendingBookings();
+    uploadPerformedServices();
     uploadClients();
     uploadSelectClients();
     uploadSelectClientsPerformedService()
+}
+
+function uploadBookings(){
+    uploadExpiredBookings();
+    uploadPendingBookings();
+    if(expiredTitle.style.display == "none" &&
+        pendingTitle.style.display == "none")
+            noBookingsDiv.style.display = "block";
+    else
+        noBookingsDiv.style.display = "none";
 }
 
 function uploadExpiredBookings(){
@@ -26,13 +39,15 @@ function uploadExpiredBookings(){
         expiredBookings.forEach(el => {
             var client = getClientById(el.IdClient);
             expiredBookingsContainer.innerHTML += 
-            "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 expiredPrenotationItem'>" +
+            "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 expiredBookingItem'>" +
                 "<div class='col'>" +
                     "<div class='row mt-1 mb-1'>" +
-                        "<div class='col'><h3>" + el.WorkDescription + "</h3></div>" +
+                        "<div class='col'><h3>" + client.Name + " " + client.Surname + "</h3></div>" +
                     "</div>" +
                     "<div class='row mt-1 mb-1'>" +
-                        "<div class='col'><label>" + el.Date + " · " + client.Name + " " + client.Surname + "</label></div>" +
+                        "<div class='col'><label>" + el.Date + "</label></div>" +
+                    "</div>" +
+                    "<div id='desc" + el.Id + "' class='row'>" +
                     "</div>" +
                 "</div>" +
                 "<div class='col d-flex justify-content-end'>" +
@@ -51,6 +66,10 @@ function uploadExpiredBookings(){
                     "</div>" +
                 "</div>" +
             "</div>";
+            if(el.WorkDescription != ""){
+                document.getElementById("desc" + el.Id).innerHTML =
+                "<div class='col mb-1'><label>" + el.WorkDescription + "</label></div>";
+            }
         });
     }
 }
@@ -65,19 +84,21 @@ function uploadPendingBookings(){
         pendingBookings.forEach(el => {
             var client = getClientById(el.IdClient);
             pendingBookingsContainer.innerHTML += 
-            "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 pendingPrenotationItem'>" +
+            "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 pendingBookingItem'>" +
                 "<div class='col'>" +
                     "<div class='row mt-1 mb-1'>" +
-                        "<div class='col'><h3>" + el.WorkDescription + "</h3></div>" +
+                        "<div class='col'><h3>" + client.Name + " " + client.Surname + "</h3></div>" +
                     "</div>" +
                     "<div class='row mt-1 mb-1'>" +
-                        "<div class='col'><label>" + el.Date + "</label> · <label>" + client.Name + " " + client.Surname + "</label></div>" +
+                        "<div class='col'><label>" + el.Date + "</label></div>" +
+                    "</div>" +
+                    "<div id='desc" + el.Id + "' class='row'>" +
                     "</div>" +
                 "</div>" +
                 "<div class='col d-flex justify-content-end'>" +
                     "<div class='row'>" +
                         "<div class='col d-flex align-items-center'>" +
-                            "<div class='m-1' onclick='(editBooking(\"" + el.Id + "\"))' title='Edit'>" +
+                            "<div class='m-2' onclick='(editBooking(\"" + el.Id + "\"))' title='Edit'>" +
                                 "<img src='img/symbol_edit.svg' width='25' height='30'>" +
                             "</div>" +
                             "<div class='m-2' onclick='(deleteBooking(\"" + el.Id + "\"))' title='Delete'>" +
@@ -87,6 +108,10 @@ function uploadPendingBookings(){
                     "</div>" +
                 "</div>" +
             "</div>";
+        if(el.WorkDescription != ""){
+            document.getElementById("desc" + el.Id).innerHTML =
+            "<div class='col mb-1'><label>" + el.WorkDescription + "</label></div>";
+        }
         });
     }
     
@@ -95,11 +120,12 @@ function uploadPendingBookings(){
 function uploadPerformedServices (){
     performedServicesContainer.innerHTML = "";
     performedServices.forEach(el => {
+        var client = getClientById(el.IdClient);
         performedServicesContainer.innerHTML +=
-        "<div class='row'>" +
-            "<div class='col'>" +
-                el.Price +
-            "</div>" +
+        "<div class='row border rounded m-1 p-2'>" +
+            "<div class='col text-center'><label>" + el.Date.split(" ")[0] + "</label></div>" +
+            "<div class='col text-center'><label>" + client.Name + " "  + client.Surname + "</label></div>" +
+            "<div class='col text-center'><label>" + "€ " + el.Price + "</label></div>" +
         "</div>";
     })
 }

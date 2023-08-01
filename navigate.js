@@ -13,7 +13,6 @@ var newPrenotationBtn = document.getElementById("newPrenotationBtn");
 
 var alertDateDanger = document.getElementById("alertDateDanger");
 var alertDateWarning = document.getElementById("alertDateWarning");
-var alertWorkDescription = document.getElementById("alertWorkDescription");
 var alertClient = document.getElementById("alertClient");
 var alertClientName = document.getElementById("alertClientName");
 
@@ -116,10 +115,14 @@ function backNewBooking(){
 
 function addNewBooking(){
     dismissAllAlertsNewBooking();
-    var okDate = true;
-    var okWorkDescription = true;
     var okClient = true;
+    var okDate = true;
 
+    var clientId = document.getElementById("inputClient").value;
+    if(clientId == ""){
+        showAlertClient();
+        okClient = false;
+    }
     var date = document.getElementById("inputDate").value;
     if(date == ""){
         showAlertDateDanger();
@@ -133,16 +136,7 @@ function addNewBooking(){
         }
     }
     var workDescription = document.getElementById("inputWorkDescription").value;
-    if(workDescription == ""){
-        showAlertWorkDescription();
-        okWorkDescription = false;
-    }
-    var clientId = document.getElementById("inputClient").value;
-    if(clientId == ""){
-        showAlertClient();
-        okClient = false;
-    }
-    if(okDate && okWorkDescription && okClient){
+    if(okClient && okDate){
         addBooking(date, workDescription, clientId);
         uploadDataView();
         backNewBooking();
@@ -161,12 +155,6 @@ function dismissAlertDateWarning(){
 function showAlertDateWarning(){
     alertDateWarning.style.display = "block";
 }
-function dismissAlertWorkDescription(){
-    alertWorkDescription.style.display = "none";
-}
-function showAlertWorkDescription(){
-    alertWorkDescription.style.display = "block";
-}
 function dismissAlertClient(){
     alertClient.style.display = "none";
 }
@@ -176,7 +164,6 @@ function showAlertClient(){
 function dismissAllAlertsNewBooking(){
     dismissAlertDateDanger();
     dismissAlertDateWarning();
-    dismissAlertWorkDescription();
     dismissAlertClient();
 }
 
@@ -269,12 +256,11 @@ function performedService(id){
     var booking = getBookingById(id);
     newPerformedService();
     setNewPerformedServiceBookingData(booking);
+    bookingId = booking.Id;
 }
 
 function setNewPerformedServiceBookingData(booking){
-    document.getElementById("inputDatePerformedService").disabled = true;
     document.getElementById("inputDatePerformedService").value = booking.Date;
-    document.getElementById("inputWorkDescriptionPerformedService").disabled = true;
     document.getElementById("inputWorkDescriptionPerformedService").value = booking.WorkDescription;
     document.getElementById("inputClientPerformedService").disabled = true;
     var client = getClientById(booking.IdClient);
@@ -288,17 +274,45 @@ function backNewPerformedService(){
     showWorkSpaceDivAndNavBar();
 }
 
+var bookingId = null;
+function addNewPerformedService(){
+    dismissAllAlertsNewPerformedService();
+    var okClient = true;
+    var okDate = true;
+    var client = document.getElementById("inputClientPerformedService").value;
+    if(client == ""){
+        okClient = false;
+    }
+    var date = document.getElementById("inputDatePerformedService").value;
+    if(date == ""){
+        okDate = false;
+    }
+    else{
+        date = date.replace("T", " ");
+        if(date > getTodayDate()){
+            okDate = false;
+        }
+    }
+    var workDescription = document.getElementById("inputWorkDescriptionPerformedService").value;
+    var price = document.getElementById("inputPricePerformedService").value;
+    if(price == "")
+        price = 0;
+    if(okClient && okDate){
+        addPerformedService(client, date, workDescription, price, bookingId);
+        uploadDataView();
+        backNewPerformedService();
+    }
+}
 
 function dismissAllAlertsNewPerformedService(){
 
 }
 
 function clearSetInputNewPerformedService(){
-    document.getElementById("inputDatePerformedService").disabled = false;
     document.getElementById("inputDatePerformedService").value = "";
-    document.getElementById("inputWorkDescriptionPerformedService").disabled = false;
     document.getElementById("inputWorkDescriptionPerformedService").value = "";
     document.getElementById("inputClientPerformedService").disabled = false;
+    document.getElementById("inputPricePerformedService").value = "";
     uploadSelectClientsPerformedService();
 }
 
@@ -307,7 +321,7 @@ function editBooking(id){
 }
 
 function deleteBooking(id){
-    if(window.confirm("Do you really want to delete this prenotation?")){
+    if(window.confirm("Are you sure to delete this booking?")){
         removeBooking(id);
         uploadDataView();
     }

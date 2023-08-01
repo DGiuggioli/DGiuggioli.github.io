@@ -44,10 +44,12 @@ function separateBookings(){
     expiredBookings = [];
     pendingBookings = [];
     for(x = 0; x < bookings.length; x++){
-        if(bookings[x].Date < todayDate)
+        if(bookings[x].IdPerformedService == ""){
+            if(bookings[x].Date < todayDate)
             expiredBookings.push(bookings[x]);
         else
             pendingBookings.push(bookings[x]);
+        }
     }
     sortBookings();
 }
@@ -97,7 +99,8 @@ function addBooking(date, workDescription, clientId){
         Id: newGuid(),
         IdClient: clientId,
         Date: date,
-        WorkDescription: workDescription
+        WorkDescription: workDescription,
+        IdPerformedService: ""
     }
     window.writeBooking(newBooking, window.user.id);
     bookings.push(newBooking);
@@ -124,15 +127,22 @@ function addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, cl
     update();
 }
 
-function addPerformedService(bookingId, price){
+function addPerformedService(clientId, date, workDescription, price, bookingId){
     const newPerformedService = {
         Id : newGuid(),
-        IdBooking : bookingId,
+        IdClient : clientId,
+        Date : date,
+        WorkDescription : workDescription,
         Price : price
     }
+
+    var booking = getBookingById(bookingId);
+    if(booking != null){
+        booking.IdPerformedService = newPerformedService.Id;
+        window.writeBooking(booking, window.user.id);
+    }
     window.writePerformedService(newPerformedService, window.user.id);
-    removeBooking(bookingId);
-    performedServicesDiv.push(newPerformedService);
+    performedServices.push(newPerformedService);
     update();
 }
 
