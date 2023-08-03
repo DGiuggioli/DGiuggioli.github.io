@@ -331,3 +331,7 @@ function changeSortClients(){
     var value = document.getElementById(selectSortClients).value;
     sortClients(value);
 }
+
+function moreInfoPerformed(id){
+    
+}

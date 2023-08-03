@@ -122,11 +122,16 @@ function uploadPerformedServices (){
     performedServices.forEach(el => {
         var client = getClientById(el.IdClient);
         performedServicesContainer.innerHTML +=
-        "<div class='row border rounded m-1 p-2'>" +
-            "<div class='col text-center'><label>" + el.Date.split(" ")[0] + "</label></div>" +
-            "<div class='col text-center'><label>" + client.Name + " "  + client.Surname + "</label></div>" +
-            "<div class='col text-center'><label>" + "€ " + el.Price + "</label></div>" +
-        "</div>";
+            "<div class='row border rounded p-2 m-1'>" +
+                "<div class='col-10 d-inline-flex justify-content-between'>" +
+                    "<label>" + el.Date.split(" ")[0] + "</label>" +
+                    "<label>" + client.Name + " "  + client.Surname + "</label>" +
+                    "<label>€ " + el.Price + "</label>" +
+                "</div>" +
+                "<div class='col d-flex justify-content-end' title='More info' onclick='moreInfoPerformed(\'" + el.Id + "\')'>" +
+                    "<img src='img/symbol_info.svg' width='25' height='25'>" +
+                "</div>" +
+            "</div>";
     })
 }
 

@@ -8,6 +8,15 @@ var workSpaceUpperContainer = document.getElementById("workSpaceUpperContainer")
 
 var alertLogin = document.getElementById("alertLogin");
 
+var googleSignInDiv = document.getElementById("googleSignIn");
+
+googleSignInDiv.onmouseover = function(){
+    googleSignInDiv.classList.add("shadow");
+}
+googleSignInDiv.onmouseleave = function(){
+    googleSignInDiv.classList.remove("shadow");
+}
+
 function signIn(){
     var email = document.getElementById("inputEmail").value;
     var password = document.getElementById("inputPassword").value;
