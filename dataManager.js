@@ -153,6 +153,15 @@ function newGuid(){
       });
 }
 
+function getClientPerformedServices(id){
+    var count = 0;
+    performedServices.forEach((el) => {
+        if(el.IdClient == id)
+            count++;
+    })
+    return count;
+}
+
 function sortClients(value){
     if(value == "Recents"){
 

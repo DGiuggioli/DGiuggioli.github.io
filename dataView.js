@@ -135,13 +135,20 @@ function uploadClients(){
     clients.forEach(el =>{
         clientsContainer.innerHTML +=
         "<div id='" + el.Id + "' class='row border rounded p-2 m-2'>" + 
-            "<div class='col d-flex align-items-center p-1'>" +
-                "<div class='d-inline-flex justify-content-start'>" +
-                    "<h3>" + el.Name + " " + el.Surname + "</h3>" +
-                "</div>" +
-                "<div class='col d-inline-flex justify-content-end' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
+            "<div class='col p-1'>" +
+                "<div class='row'>" +
+                    "<div class='d-inline-flex justify-content-start'>" +
+                        "<h3>" + el.Name + " " + el.Surname + "</h3>" +
+                    "</div>" +
+                "</div> " +
+                "<div class='row'>" +
+                    "<div class='d-inline-flex justify-content-start'>" +
+                        "<label>Performed services: " + getClientPerformedServices(el.Id) + "</label>" +
+                    "</div>" +
+                "</div> " +
+            "</div>" +
+            "<div class='col d-inline-flex align-items-center justify-content-end' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
                     "<img src='img/symbol_newBooking.svg' width='30' height='30'>" +
-                "</div>" +
             "</div>" +
         "</div>";
     })
