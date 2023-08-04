@@ -122,14 +122,18 @@ function uploadPerformedServices (){
     performedServices.forEach(el => {
         var client = getClientById(el.IdClient);
         performedServicesContainer.innerHTML +=
-            "<div class='row border rounded p-2 m-1'>" +
-                "<div class='col-10 d-inline-flex justify-content-between'>" +
+            "<div class='row border rounded pt-1 pb-1 m-2'>" +
+                "<div class='col-4'>" +
                     "<label>" + el.Date.split(" ")[0] + "</label>" +
-                    "<label>" + client.Name + " "  + client.Surname + "</label>" +
-                    "<label>€ " + el.Price + "</label>" +
                 "</div>" +
-                "<div class='col d-flex justify-content-end' title='More info' onclick='moreInfoPerformed(\'" + el.Id + "\')'>" +
-                    "<img src='img/symbol_info.svg' width='25' height='25'>" +
+                "<div class='col-4 tableItemPerformedService d-flex justify-content-start'>" +
+                    "<label>" + client.Name + " "  + client.Surname + "</label>" +
+                "</div>" +
+                "<div class='col-2 d-flex justify-content-end'>" +
+                        "<label>" + el.Price + "</label>" +
+                "</div>" +
+                "<div class='col-2 d-flex justify-content-end'>" +
+                    "<img src='img/symbol_info.svg' width='25' height='25' onclick='moreInfoPerformed(\'" + el.Id + "\')' title='More info'>" +
                 "</div>" +
             "</div>";
     })
@@ -140,20 +144,24 @@ function uploadClients(){
     clients.forEach(el =>{
         clientsContainer.innerHTML +=
         "<div id='" + el.Id + "' class='row border rounded p-2 m-2'>" + 
-            "<div class='col p-1'>" +
+            "<div class='col-10 p-1'>" +
                 "<div class='row'>" +
-                    "<div class='d-inline-flex justify-content-start'>" +
+                    "<div class='col d-inline-flex justify-content-start'>" +
                         "<h3>" + el.Name + " " + el.Surname + "</h3>" +
                     "</div>" +
                 "</div> " +
                 "<div class='row'>" +
-                    "<div class='d-inline-flex justify-content-start'>" +
+                    "<div class='col d-inline-flex justify-content-start'>" +
                         "<label>Performed services: " + getClientPerformedServices(el.Id) + "</label>" +
                     "</div>" +
                 "</div> " +
             "</div>" +
-            "<div class='col d-inline-flex align-items-center justify-content-end' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
-                    "<img src='img/symbol_newBooking.svg' width='30' height='30'>" +
+            "<div class='col d-flex align-items-center'>" +
+                "<div class='row'>" +
+                    "<div class='col d-inline-flex align-items-center justify-content-end' onclick='(uploadSelectClientsById(\"" + el.Id +"\"))' title='New booking'>" +
+                        "<img src='img/symbol_newBooking.svg' width='30' height='30'>" +
+                    "</div>" +
+                "</div>" +
             "</div>" +
         "</div>";
     })
