@@ -362,7 +362,7 @@ function deleteBooking(id){
 function changeSortClients(){
     var value = selectSortClients.value;
     sortClients(value);
-    uploadClients();
+    uploadDataView();
 }
 
 function moreInfoPerformed(id){
