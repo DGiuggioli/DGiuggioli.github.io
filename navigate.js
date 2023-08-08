@@ -219,8 +219,6 @@ function addNewClient(){
     if(okClientName){
         addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear);
         changeSortClients();
-        uploadSelectClients();
-        uploadSelectClientsPerformedService();
         backNewClient();
     }
 }
@@ -368,6 +366,8 @@ function changeSortClients(){
     var value = selectSortClients.value;
     sortClients(value);
     uploadClients();
+    uploadSelectClients();
+    uploadSelectClientsPerformedService();
 }
 
 function moreInfoPerformed(id){
