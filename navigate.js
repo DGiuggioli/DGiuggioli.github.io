@@ -11,10 +11,18 @@ var workSpaceUpperContainerMenu = document.getElementById("workSpaceUpperContain
 
 var newPrenotationBtn = document.getElementById("newPrenotationBtn");
 
+// alerts booking
 var alertDateDanger = document.getElementById("alertDateDanger");
 var alertDateWarning = document.getElementById("alertDateWarning");
 var alertClient = document.getElementById("alertClient");
+
+// alert client
 var alertClientName = document.getElementById("alertClientName");
+
+// alert performed service
+var alertClientPerformedService = document.getElementById("alertClientPerformedService");
+var alertDatePerformedServiceDanger = document.getElementById("alertDatePerformedServiceDanger");
+var alertDatePerformedServiceWarning = document.getElementById("alertDatePerformedServiceWarning");
 
 showHome();
 loadInputClientBirthYearOptions();
@@ -208,7 +216,7 @@ function addNewClient(){
     var clientBirthYear = document.getElementById("inputClientBirthYear").value;
     if(okClientName){
         addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear);
-        uploadDataView();
+        changeSortClients();
         backNewClient();
     }
 }
@@ -281,15 +289,18 @@ function addNewPerformedService(){
     var okDate = true;
     var client = document.getElementById("inputClientPerformedService").value;
     if(client == ""){
+        showAlertClientPerformedService();
         okClient = false;
     }
     var date = document.getElementById("inputDatePerformedService").value;
     if(date == ""){
+        showAlertDatePerformedServiceDanger()
         okDate = false;
     }
     else{
         date = date.replace("T", " ");
         if(date > getTodayDate()){
+            showAlertDatePerformedServiceWarning()
             okDate = false;
         }
     }
@@ -305,7 +316,28 @@ function addNewPerformedService(){
 }
 
 function dismissAllAlertsNewPerformedService(){
+    dismissAlertClientPerformedService();
+    dismissAlertDatePerformedServiceDanger();
+    dismissAlertDatePerformedServiceWarning();
+}
 
+function dismissAlertClientPerformedService(){
+    alertClientPerformedService.style.display = "none";
+}
+function showAlertClientPerformedService(){
+    alertClientPerformedService.style.display = "block";
+}
+function dismissAlertDatePerformedServiceDanger(){
+    alertDatePerformedServiceDanger.style.display = "none";
+}
+function showAlertDatePerformedServiceDanger(){
+    alertDatePerformedServiceDanger.style.display = "block";
+}
+function dismissAlertDatePerformedServiceWarning(){
+    alertDatePerformedServiceWarning.style.display = "none";
+}
+function showAlertDatePerformedServiceWarning(){
+    alertDatePerformedServiceWarning.style.display = "block";
 }
 
 function clearSetInputNewPerformedService(){
@@ -323,13 +355,14 @@ function editBooking(id){
 function deleteBooking(id){
     if(window.confirm("Are you sure to delete this booking?")){
         removeBooking(id);
-        uploadDataView();
+        uploadClients();
     }
 }
 
 function changeSortClients(){
-    var value = document.getElementById(selectSortClients).value;
+    var value = selectSortClients.value;
     sortClients(value);
+    uploadClients();
 }
 
 function moreInfoPerformed(id){

@@ -6,6 +6,7 @@ var clientsContainer = document.getElementById("clientsContainer");
 var expiredTitle = document.getElementById("expiredTitle");
 var pendingTitle = document.getElementById("pendingTitle");
 
+var selectSortClients = document.getElementById("selectSortClients");
 var selectClients = document.getElementById("inputClient");
 var selectClientsPerformedService = document.getElementById("inputClientPerformedService");
 
@@ -123,16 +124,16 @@ function uploadPerformedServices (){
         var client = getClientById(el.IdClient);
         performedServicesContainer.innerHTML +=
             "<div class='row border rounded pt-1 pb-1 m-2'>" +
-                "<div class='col-4'>" +
+                "<div class='col-4 d-flex justify-content-start'>" +
                     "<label>" + el.Date.split(" ")[0] + "</label>" +
                 "</div>" +
-                "<div class='col-4 tableItemPerformedService d-flex justify-content-start'>" +
+                "<div class='col-5 tableItemPerformedService d-flex justify-content-start'>" +
                     "<label>" + client.Name + " "  + client.Surname + "</label>" +
                 "</div>" +
                 "<div class='col-2 d-flex justify-content-end'>" +
                         "<label>" + el.Price + "</label>" +
                 "</div>" +
-                "<div class='col-2 d-flex justify-content-end'>" +
+                "<div class='col-1 d-flex justify-content-end'>" +
                     "<img src='img/symbol_info.svg' width='25' height='25' onclick='moreInfoPerformed(\'" + el.Id + "\')' title='More info'>" +
                 "</div>" +
             "</div>";
@@ -164,6 +165,17 @@ function uploadClients(){
                 "</div>" +
             "</div>" +
         "</div>";
+    })
+}
+
+function uploadSelectSortClients(){
+    selectSortClients.innerHTML = "";
+    clientOrders.forEach(el => {
+        var selected = "";
+        if(el == settings.ClientOrder)
+            selected = "selected";
+        selectSortClients.innerHTML += 
+            "<option value='" + el + "' " + selected + ">" + el + "</option>";
     })
 }
 

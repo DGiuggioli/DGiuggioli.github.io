@@ -10,17 +10,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>MyClients</title>
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
         import { getDatabase, ref, set, update, onValue, get, child } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
         import { getAuth, signInWithRedirect,getRedirectResult, GoogleAuthProvider, browserSessionPersistence, setPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
           apiKey: "AIzaSyBZRK9NJNjnKxOoz38uG91ou-ra8tQ0v2s",
           authDomain: "myclient-c7bdc.firebaseapp.com",
@@ -32,7 +26,6 @@
           databaseURL: "https://myclient-c7bdc-default-rtdb.europe-west1.firebasedatabase.app/",
         };
       
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const database = getDatabase(app);
@@ -59,14 +52,10 @@
                 setUser(result.user);
             })
             .catch((error) => {
-                // Handle Errors here.
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                // The email of the user's account used.
                 const email = error.customData.email;
-                // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error);
-                // ...
             });
         }
 
@@ -77,13 +66,14 @@
         window.writeClient = function (data, userId) {
             window.writeData('clients/' + userId + "/" + data.Id, data);
         }
-
         window.writeBooking = function (data, userId) {
             window.writeData('bookings/' + userId + "/" + data.Id, data);
         }
-
         window.writePerformedService = function (data, userId) {
             window.writeData('performedServices/' + userId + "/" + data.Id, data);
+        }
+        window.writeSettings = function (data, userId) {
+            window.writeData('settings/' + userId, data);
         }
 
         window.readData = async function (path) {
@@ -102,21 +92,20 @@
             if(readClients != undefined)
                 readClients.forEach(el =>{clients.push(el.val());})
         }
-
         window.readBookings = async function (userId, bookings) {
             var readBookings = await window.readData(`bookings/${userId}`);
             if(readBookings != undefined)
                 readBookings.forEach(el => {bookings.push(el.val());})
         }
-
         window.readPerformedServices = async function (userId, performedServices){
             var readPerformedServices = await window.readData(`performedServices/${userId}`);
             if(readPerformedServices != undefined)
                 readPerformedServices.forEach(el => {performedServices.push(el.val());})
         }
-
-        window.remove = async function (path, key){
-            
+        window.readSettings = async function (userId, settings){
+            var readSettings = await window.readData(`settings/${userId}`);
+            if(readSettings != undefined)
+                settings = readSettings.val();
         }
 
         window.removeBookingFromDb = async function (userId, elId){
@@ -261,11 +250,7 @@
             <div id="sortClientsSelectContainer" class="container-fluid">
                 <div class="row">
                     <div class="col m-2">
-                        <select id="selectSortClients" class="form-select form-select-sm" onchange="changeSortClients()">
-                            <option value="Recents" selected>Recents</option>
-                            <option value="Fidelity">Fidelity</option>
-                            <option value="Expense">Expense</option>
-                        </select>
+                        <select id="selectSortClients" class="form-select form-select-sm" onchange="changeSortClients()"></select>
                     </div>
                 </div>
             </div>
@@ -408,7 +393,7 @@
                             <select id="inputClientPerformedService" class="form-select form-select-sm"></select>
                         </div>
                     </div>
-                    <div id="alertClient" class="row p-1" style="display: none;">
+                    <div id="alertClientPerformedService" class="row p-1" style="display: none;">
                         <div class="col">
                             <div class="alert alert-danger alert-dismissible" role="alert">
                                 <label>Please select a client</label>
@@ -434,15 +419,15 @@
                         <div class="col">
                             <div class="alert alert-danger alert-dismissible" role="alert">
                                 <label>Please select a date</label>
-                                <button class="btn-close" onclick="dismissAlertDatePerformedService()"></button>
+                                <button class="btn-close" onclick="dismissAlertDatePerformedServiceDanger()"></button>
                             </div>
                         </div>
                     </div>
-                    <div id="alertDatePerformedserviceWarning" class="row p-1" style="display: none;">
+                    <div id="alertDatePerformedServiceWarning" class="row p-1" style="display: none;">
                         <div class="col">
                             <div class="alert alert-warning alert-dismissible" role="alert">
                                 <label>Please select a past date</label>
-                                <button class="btn-close" onclick="dismissAlertDateWarning()"></button>
+                                <button class="btn-close" onclick="dismissAlertDatePerformedServiceWarning()"></button>
                             </div>
                         </div>
                     </div>
@@ -464,14 +449,6 @@
                             <textarea id="inputWorkDescriptionPerformedService" class="form-control form-control-sm" type="text"></textarea>
                         </div>
                     </div>
-                    <div id="alertWorkDescription" class="row p-1" style="display: none;">
-                        <div class="col">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <label>Please define a work description</label>
-                                <button class="btn-close" onclick="dismissAlertWorkDescription()"></button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="row">
@@ -488,14 +465,6 @@
                     <div class="row">
                         <div class="col m-1">
                             <input id="inputPricePerformedService" class="form-control form-control-sm" type="tel"> 
-                        </div>
-                    </div>
-                    <div id="alertPrice" class="row p-1" style="display: none;">
-                        <div class="col">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <label>Please define a price</label>
-                                <button class="btn-close" onclick="dismissAlertPrice()"></button>
-                            </div>
                         </div>
                     </div>
                 </div>

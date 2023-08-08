@@ -47,6 +47,7 @@ async function trySetUser(googleUser){
         showWorkSpaceDivAndNavBar();
         await populate();
         uploadDataView();
+        uploadSelectSortClients();
     }
     else
         startingDiv.style.display = "block";

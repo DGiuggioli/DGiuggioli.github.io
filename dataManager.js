@@ -1,21 +1,60 @@
 var clients = [];
 var bookings = [];
 var performedServices = [];
+var settings;
 
 var pendingBookings = [];
 var expiredBookings = [];
+
+const pages = ["Home", "Performed services", "Clients"];
+const clientOrders = ["Alphabetical", "Recents", "First service", "Expense"];
 
 async function populate(){
     await window.readClients(window.user.id, clients);
     await window.readBookings(window.user.id, bookings);
     await window.readPerformedServices(window.user.id, performedServices);
+    await window.readSettings(window.user.id, settings);
+    if(settings == undefined || settings == null)
+        createDefaultSettings();
     update();
+    sortClients(settings.ClientOrder);
 }
-
 
 function update(){
     separateBookings();
+    sortPerformedServices();
+}
 
+function createDefaultSettings(){
+    settings = {
+        Page : pages[0],
+        ClientOrder : clientOrders[0]
+    }
+}
+
+function updateSettingsPage(page){
+    if(checkValue(pages, page))
+        settings.Page = page;
+}
+function updateSettingsClientOrder(clientOrder){
+    if(checkValue(clientOrders))
+        settings.ClientOrder = clientOrder;
+}
+
+function checkValue(arr, value){
+    var x = 0;
+    while(x < arr.length){
+        if(arr[x] == value)
+            return true;
+        x++;
+    }
+    return false;
+}
+
+document.onclose = updateSettingsOnDb();
+function updateSettingsOnDb(){
+    if(window.user != null && window.user != undefined)
+        window.writeSettings(settings, window.user.id);
 }
 
 function findUser(email, password){
@@ -57,6 +96,10 @@ function separateBookings(){
 function sortBookings(){
     expiredBookings = expiredBookings.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0);
     pendingBookings = pendingBookings.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0);
+}
+
+function sortPerformedServices(){
+    performedServices = performedServices.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0)
 }
 
 function dateToString(date){
@@ -162,14 +205,51 @@ function getClientPerformedServices(id){
     return count;
 }
 
+function getClientTotalExpense(id){
+    var expense = 0;
+    performedServices.forEach((el) => {
+        if(el.IdClient == id)
+            expense += parseInt(el.Price);
+    })
+    return expense;
+}
+
+function getClientFirstPerformedService(id){
+    var x = performedServices.length - 1;
+    while(x >= 0){
+        if(performedServices[x].IdClient == id)
+            return performedServices[x].Date;
+        x--;
+    }
+    if(x < 0)
+        return dateToString(new Date(-8640000000000000));
+}
+
+function getClientLastPerformedService(id){
+    var x = 0;
+    while(x < performedServices.length){
+        if(performedServices[x].IdClient == id)
+            return performedServices[x].Date;
+        x++;
+    }
+    if(x == performedServices.length)
+        return dateToString(new Date(8640000000000000));
+}
+
 function sortClients(value){
-    if(value == "Recents"){
-
+    if(value == clientOrders[0]){
+        clients = clients.sort((x, y) => (x.Name > y.Name)? 1 : (x.Name < y.Name) ? -1 : 0);
     }
-    else if(value == "Fidelity"){
-
+    else if(value == clientOrders[1]){
+        clients = clients.sort((x, y) => (getClientLastPerformedService(x.Id) > getClientLastPerformedService(y.Id))? 1 : 
+        (getClientLastPerformedService(x.Id) < getClientLastPerformedService(y.Id)) ? -1 : 0);
     }
-    else if(value == "Expense"){
-        
+    else if(value == clientOrders[2]){
+        clients = clients.sort((x, y) => (getClientFirstPerformedService(x.Id) < getClientFirstPerformedService(y.Id))? 1 : 
+        (getClientFirstPerformedService(x.Id) > getClientFirstPerformedService(y.Id)) ? -1 : 0);
+    }
+    else if(value == clientOrders[3]){
+        clients = clients.sort((x, y) => (getClientTotalExpense(x.Id) < getClientTotalExpense(y.Id))? 1 : 
+        (getClientTotalExpense(x.Id) > getClientTotalExpense(y.Id)) ? -1 : 0);
     }
 }
