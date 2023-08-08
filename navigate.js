@@ -146,7 +146,9 @@ function addNewBooking(){
     var workDescription = document.getElementById("inputWorkDescription").value;
     if(okClient && okDate){
         addBooking(date, workDescription, clientId);
-        uploadDataView();
+        uploadBookings()
+        uploadExpiredBookings();
+        uploadPendingBookings();
         backNewBooking();
     }
 }
@@ -217,6 +219,8 @@ function addNewClient(){
     if(okClientName){
         addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear);
         changeSortClients();
+        uploadSelectClients();
+        uploadSelectClientsPerformedService();
         backNewClient();
     }
 }
@@ -310,7 +314,8 @@ function addNewPerformedService(){
         price = 0;
     if(okClient && okDate){
         addPerformedService(client, date, workDescription, price, bookingId);
-        uploadDataView();
+        uploadPerformedServices();
+        uploadClients();
         backNewPerformedService();
     }
 }
@@ -362,7 +367,7 @@ function deleteBooking(id){
 function changeSortClients(){
     var value = selectSortClients.value;
     sortClients(value);
-    uploadDataView();
+    uploadClients();
 }
 
 function moreInfoPerformed(id){

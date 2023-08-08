@@ -17,7 +17,7 @@ function uploadDataView() {
     uploadPerformedServices();
     uploadClients();
     uploadSelectClients();
-    uploadSelectClientsPerformedService()
+    uploadSelectClientsPerformedService();
 }
 
 function uploadBookings(){
