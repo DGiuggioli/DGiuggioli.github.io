@@ -5,6 +5,8 @@ var newPerformedServiceDiv = document.getElementById("newPerformedService");
 var newClientDiv = document.getElementById("newClient");
 var navBar = document.getElementById("navBar");
 var workSpaceUpperContainer = document.getElementById("workSpaceUpperContainer");
+var detailClientDiv = document.getElementById("detailClient");
+var detailPerformedServiceDiv = document.getElementById("detailPerformedService");
 
 var alertLogin = document.getElementById("alertLogin");
 
@@ -62,6 +64,8 @@ function showWorkSpaceDivAndNavBar(){
     newPerformedServiceDiv.style.display = "none";
     newClientDiv.style.display = "none";
     startingDiv.style.display = "none";
+    detailClientDiv.style.display = "none";
+    detailPerformedServiceDiv.style.display = "none";
 }
 
 function hideWorkSpaceAndNavBar(){

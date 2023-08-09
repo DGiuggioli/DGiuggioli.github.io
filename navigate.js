@@ -370,6 +370,21 @@ function changeSortClients(){
     uploadSelectClientsPerformedService();
 }
 
-function moreInfoPerformed(id){
-    
+function setUnderline(id){
+    document.getElementById(id).style.textDecoration = "underline";
+}
+
+function removeUnderline(id){
+    document.getElementById(id).style.textDecoration = "none";
+}
+function detailClient(id){
+    detailClientDiv.style.display = "block";
+    hideWorkSpaceAndNavBar();
+    var client = getClientById(id);
+    showClientDetail(client);
+}
+
+function detailPerformed(id){
+    detailPerformedServiceDiv.style.display = "block";
+    hideWorkSpaceAndNavBar();
 }

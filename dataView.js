@@ -43,7 +43,7 @@ function uploadExpiredBookings(){
             "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 expiredBookingItem'>" +
                 "<div class='col'>" +
                     "<div class='row mt-1 mb-1'>" +
-                        "<div class='col'><h3>" + client.Name + " " + client.Surname + "</h3></div>" +
+                    "<div class='col'><h3 id='h3" + el.Id + "' onclick='detailClient(\"" + el.Id + "\")' onmouseover='setUnderline(\"h3" + el.Id + "\")' onmouseleave='removeUnderline(\"h3" + el.Id + "\")'>" + client.Name + " " + client.Surname + "</h3></div>" +
                     "</div>" +
                     "<div class='row mt-1 mb-1'>" +
                         "<div class='col'><label>" + el.Date + "</label></div>" +
@@ -88,7 +88,7 @@ function uploadPendingBookings(){
             "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 pendingBookingItem'>" +
                 "<div class='col'>" +
                     "<div class='row mt-1 mb-1'>" +
-                        "<div class='col'><h3>" + client.Name + " " + client.Surname + "</h3></div>" +
+                        "<div class='col'><h3 id='h3" + el.Id + "' onclick='detailClient(\"" + el.IdClient + "\")' onmouseover='setUnderline(\"h3" + el.Id + "\")' onmouseleave='removeUnderline(\"h3" + el.Id + "\")'>" + client.Name + " " + client.Surname + "</h3></div>" +
                     "</div>" +
                     "<div class='row mt-1 mb-1'>" +
                         "<div class='col'><label>" + el.Date + "</label></div>" +
@@ -148,7 +148,7 @@ function uploadClients(){
             "<div class='col-10 p-1'>" +
                 "<div class='row'>" +
                     "<div class='col d-inline-flex justify-content-start'>" +
-                        "<h3>" + el.Name + " " + el.Surname + "</h3>" +
+                        "<h3 id='h" + el.Id + "' onclick='detailClient(\"" + el.Id + "\")' onmouseover='setUnderline(\"h" + el.Id + "\")' onmouseleave='removeUnderline(\"h" + el.Id + "\")'>" + el.Name + " " + el.Surname + "</h3>" +
                     "</div>" +
                 "</div> " +
                 "<div class='row'>" +
@@ -205,4 +205,24 @@ function uploadSelectClientsPerformedService(){
         selectClientsPerformedService.innerHTML += 
         "<option value='" + el.Id +"'>" + el.Name + " " + el.Surname + "</option>";
     });
+}
+
+function showClientDetail(client){
+    document.getElementById("detailClientTitle").innerHTML = client.Name + " " + client.Surname;
+    email = document.getElementById("detailClientEmail");
+    console.log(client.Email);
+    if(client.Email == null || client.Email == "")
+        email.innerHTML = "---";
+    else
+        email.innerHTML = client.Email;
+    phone = document.getElementById("detailClientPhone");
+    if(client.phoneNumber == null || client.phoneNumber == "")
+        phone.innerHTML = "---";
+    else
+        phone.innerHTML = client.phoneNumber;
+    birthYear = document.getElementById("detailClientBirthYear");
+    if(client.BirthYear == null || client.BirthYear == "")
+        birthYear.innerHTML = "---";
+    else
+        birthYear.innerHTML = client.BirthYear;
 }
