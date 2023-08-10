@@ -2,9 +2,9 @@ var navHome = document.getElementById("navHome");
 var navPerformedServices = document.getElementById("navPerformedServices");
 var navClients = document.getElementById("navClients");
 
-var homeDiv = document.getElementById("home");
-var performedServicesDiv = document.getElementById("performedServices");
-var clientsDiv = document.getElementById("clients");
+var homeDiv = document.getElementById(pages[0]);
+var performedServicesDiv = document.getElementById(pages[1]);
+var clientsDiv = document.getElementById(pages[2]);
 
 var workSpaceUpperContainerTitle = document.getElementById("workSpaceUpperContainerTitle");
 var workSpaceUpperContainerMenu = document.getElementById("workSpaceUpperContainerMenu");
@@ -24,8 +24,24 @@ var alertClientPerformedService = document.getElementById("alertClientPerformedS
 var alertDatePerformedServiceDanger = document.getElementById("alertDatePerformedServiceDanger");
 var alertDatePerformedServiceWarning = document.getElementById("alertDatePerformedServiceWarning");
 
-showHome();
 loadInputClientBirthYearOptions();
+
+function backCurrentPage(){
+    switch(settings.Page){
+        case pages[0]: {
+            showHome();
+            break;
+        }
+        case pages[1]: {
+            showPerformedServices();
+            break;
+        }
+        case pages[2]: {
+            showClients();
+            break;
+        }
+    }
+}
 
 function showHome(){
     selectNavHome();
@@ -35,6 +51,7 @@ function showHome(){
     homeDiv.style.display = "block";
     performedServicesDiv.style.display = "none";
     clientsDiv.style.display = "none";
+    updateSettingsPage(pages[0]);
 }
 function showPerformedServices(){
     deselectNavHome();
@@ -44,6 +61,7 @@ function showPerformedServices(){
     homeDiv.style.display = "none";
     performedServicesDiv.style.display = "block";
     clientsDiv.style.display = "none";
+    updateSettingsPage(pages[1]);
 }
 function showClients(){
     deselectNavHome();
@@ -53,6 +71,7 @@ function showClients(){
     homeDiv.style.display = "none";
     performedServicesDiv.style.display = "none";
     clientsDiv.style.display = "block";
+    updateSettingsPage(pages[2]);
 }
 
 function selectNavHome(){
@@ -387,4 +406,9 @@ function detailClient(id){
 function detailPerformed(id){
     detailPerformedServiceDiv.style.display = "block";
     hideWorkSpaceAndNavBar();
+}
+
+function backDetailClient(){
+    detailClientDiv.style.display = "none";
+    showWorkSpaceDivAndNavBar();
 }

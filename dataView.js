@@ -128,9 +128,9 @@ function uploadPerformedServices (){
                     "<label>" + el.Date.split(" ")[0] + "</label>" +
                 "</div>" +
                 "<div class='col-5 tableItemPerformedService d-flex justify-content-start'>" +
-                    "<label>" + client.Name + " "  + client.Surname + "</label>" +
+                    "<label id='label" + client.Id + el.Date + "' onclick='detailClient(\"" + client.Id + "\")' onmouseover='setUnderline(\"label" + client.Id + el.Date + "\")' onmouseleave='removeUnderline(\"label" + client.Id + el.Date + "\")'>" + client.Name + " " + client.Surname + "</label>" +
                 "</div>" +
-                "<div class='col-2 d-flex justify-content-end'>" +
+                "<div class='col-2 d-flex justify-content-center'>" +
                         "<label>" + el.Price + "</label>" +
                 "</div>" +
                 "<div class='col-1 d-flex justify-content-end'>" +
@@ -153,7 +153,7 @@ function uploadClients(){
                 "</div> " +
                 "<div class='row'>" +
                     "<div class='col d-inline-flex justify-content-start'>" +
-                        "<label>Performed services: " + getClientPerformedServices(el.Id) + "</label>" +
+                        "<label>" + getClientPerformedServices(el.Id) + " services</label>" +
                     "</div>" +
                 "</div> " +
             "</div>" +
@@ -208,21 +208,30 @@ function uploadSelectClientsPerformedService(){
 }
 
 function showClientDetail(client){
-    document.getElementById("detailClientTitle").innerHTML = client.Name + " " + client.Surname;
-    email = document.getElementById("detailClientEmail");
-    console.log(client.Email);
+    document.getElementById("detailCustomerTitle").innerHTML = client.Name + " " + client.Surname;
+
+    email = document.getElementById("detailCustomerEmail");
     if(client.Email == null || client.Email == "")
         email.innerHTML = "---";
     else
         email.innerHTML = client.Email;
-    phone = document.getElementById("detailClientPhone");
+
+    phone = document.getElementById("detailCustomerPhone");
     if(client.phoneNumber == null || client.phoneNumber == "")
         phone.innerHTML = "---";
     else
         phone.innerHTML = client.phoneNumber;
-    birthYear = document.getElementById("detailClientBirthYear");
+
+    birthYear = document.getElementById("detailCustomerBirthYear");
     if(client.BirthYear == null || client.BirthYear == "")
         birthYear.innerHTML = "---";
     else
         birthYear.innerHTML = client.BirthYear;
+
+    document.getElementById("detailCustomerExpense").innerHTML = "total expense: € " + getClientTotalExpense(client.Id);
+    document.getElementById("detailCustomerPerformedServices").innerHTML = "performed services: " + getClientPerformedServices(client.Id);
+    document.getElementById("detailCustomerAvgExpense").innerHTML = "average expense: € " + getClientAvgExpense(client.Id);
+    document.getElementById("detailCustomerPercent").innerHTML = "gain's percentage: " + getClientGainPercentage(client.Id) + " %";
+    document.getElementById("detailCustomerLastService").innerHTML = "last service: " + getClientLastPerformedServiceString(client.Id);
+    document.getElementById("detailCustomerFirstService").innerHTML = "first service: " + getClientFirstPerformedServiceString(client.Id);
 }

@@ -6,16 +6,16 @@ var settings;
 var pendingBookings = [];
 var expiredBookings = [];
 
-const pages = ["Home", "Performed services", "Clients"];
+const pages = ["Home", "PerformedServices", "Clients"];
 const clientOrders = ["Alphabetical", "Recents", "First service", "Expense"];
 
 async function populate(){
+    createDefaultSettings();
     await window.readClients(window.user.id, clients);
     await window.readBookings(window.user.id, bookings);
     await window.readPerformedServices(window.user.id, performedServices);
     await window.readSettings(window.user.id, settings);
-    if(settings == undefined || settings == null)
-        createDefaultSettings();
+
     update();
     sortClients(settings.ClientOrder);
 }
@@ -196,6 +196,14 @@ function newGuid(){
       });
 }
 
+function getTotalClientExpense(){
+    var expense = 0;
+    performedServices.forEach(el =>{
+        expense += parseFloat(el.Price);
+    })
+    return expense;
+}
+
 function getClientPerformedServices(id){
     var count = 0;
     performedServices.forEach((el) => {
@@ -209,9 +217,25 @@ function getClientTotalExpense(id){
     var expense = 0;
     performedServices.forEach((el) => {
         if(el.IdClient == id)
-            expense += parseInt(el.Price);
+            expense += parseFloat(el.Price);
     })
     return expense;
+}
+
+function getClientAvgExpense(id){
+    var expense = parseFloat(getClientTotalExpense(id));
+    var services = parseInt(getClientPerformedServices(id));
+    if(services != 0)
+        return parseFloat(expense / services);
+    else 
+        return 0;
+}
+
+function getClientGainPercentage(id){
+    var expense = parseFloat(getClientTotalExpense(id));
+    var totalExpense = getTotalClientExpense();
+    if(totalExpense != 0)
+        return parseFloat(parseFloat(expense / totalExpense) * 100).toFixed(2);
 }
 
 function getClientFirstPerformedService(id){
@@ -223,6 +247,21 @@ function getClientFirstPerformedService(id){
     }
     if(x < 0)
         return dateToString(new Date(-8640000000000000));
+}
+
+function getClientFirstPerformedServiceString(id){
+    var date = getClientFirstPerformedService(id);
+    if(date == "-271821-04-20 00:49")
+        return " - ";
+    else
+        return date;
+}
+function getClientLastPerformedServiceString(id){
+    var date = getClientLastPerformedService(id);
+    if(date == "275760-09-13 02:00")
+        return " - ";
+    else
+        return date;
 }
 
 function getClientLastPerformedService(id){

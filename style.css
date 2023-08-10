@@ -119,3 +119,13 @@ a {
 #selectSortClients{
     width: 20vh;
 }
+
+.fixed-top{
+    position: fixed;
+    top: 0;
+    height: 8vh;
+}
+.body-scroll{
+    margin-top: 8vh;
+    overflow-y: auto;
+}

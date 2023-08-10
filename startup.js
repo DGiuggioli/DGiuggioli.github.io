@@ -46,8 +46,9 @@ async function trySetUser(googleUser){
             phoneNumber : googleUser.phoneNumber,
             photoURL : googleUser.photoURL
         }
-        showWorkSpaceDivAndNavBar();
         await populate();
+        showWorkSpaceDivAndNavBar();
+        showHome();
         uploadDataView();
         uploadSelectSortClients();
     }
