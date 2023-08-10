@@ -99,7 +99,7 @@ function sortBookings(){
 }
 
 function sortPerformedServices(){
-    performedServices = performedServices.sort((x, y) => (x.Date > y.Date)? 1 : (x.Date < y.Date) ? -1 : 0)
+    performedServices = performedServices.sort((x, y) => (x.Date < y.Date)? 1 : (x.Date > y.Date) ? -1 : 0)
 }
 
 function dateToString(date){
@@ -246,22 +246,7 @@ function getClientFirstPerformedService(id){
         x--;
     }
     if(x < 0)
-        return dateToString(new Date(-8640000000000000));
-}
-
-function getClientFirstPerformedServiceString(id){
-    var date = getClientFirstPerformedService(id);
-    if(date == "-271821-04-20 00:49")
-        return " - ";
-    else
-        return date;
-}
-function getClientLastPerformedServiceString(id){
-    var date = getClientLastPerformedService(id);
-    if(date == "275760-09-13 02:00")
-        return " - ";
-    else
-        return date;
+        return dateToString(new Date(8640000000000000));
 }
 
 function getClientLastPerformedService(id){
@@ -272,20 +257,37 @@ function getClientLastPerformedService(id){
         x++;
     }
     if(x == performedServices.length)
-        return dateToString(new Date(8640000000000000));
+        return dateToString(new Date(-8640000000000000));
 }
+
+function getClientFirstPerformedServiceString(id){
+    var date = getClientFirstPerformedService(id);
+    if(date == dateToString(new Date(8640000000000000)))
+        return " - ";
+    else
+        return date;
+}
+function getClientLastPerformedServiceString(id){
+    var date = getClientLastPerformedService(id);
+    if(date == dateToString(new Date(-8640000000000000)))
+        return " - ";
+    else
+        return date;
+}
+
+
 
 function sortClients(value){
     if(value == clientOrders[0]){
         clients = clients.sort((x, y) => (x.Name > y.Name)? 1 : (x.Name < y.Name) ? -1 : 0);
     }
     else if(value == clientOrders[1]){
-        clients = clients.sort((x, y) => (getClientLastPerformedService(x.Id) > getClientLastPerformedService(y.Id))? 1 : 
-        (getClientLastPerformedService(x.Id) < getClientLastPerformedService(y.Id)) ? -1 : 0);
+        clients = clients.sort((x, y) => (getClientLastPerformedService(x.Id) < getClientLastPerformedService(y.Id))? 1 : 
+        (getClientLastPerformedService(x.Id) > getClientLastPerformedService(y.Id)) ? -1 : 0);
     }
     else if(value == clientOrders[2]){
-        clients = clients.sort((x, y) => (getClientFirstPerformedService(x.Id) < getClientFirstPerformedService(y.Id))? 1 : 
-        (getClientFirstPerformedService(x.Id) > getClientFirstPerformedService(y.Id)) ? -1 : 0);
+        clients = clients.sort((x, y) => (getClientFirstPerformedService(x.Id) > getClientFirstPerformedService(y.Id))? 1 : 
+        (getClientFirstPerformedService(x.Id) < getClientFirstPerformedService(y.Id)) ? -1 : 0);
     }
     else if(value == clientOrders[3]){
         clients = clients.sort((x, y) => (getClientTotalExpense(x.Id) < getClientTotalExpense(y.Id))? 1 : 
