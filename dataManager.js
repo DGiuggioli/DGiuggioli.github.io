@@ -57,17 +57,6 @@ function updateSettingsOnDb(){
         window.writeSettings(settings, window.user.id);
 }
 
-function findUser(email, password){
-    for(x = 0; x < users.length; x++){
-        if(users[x].Email == email &&
-           users[x].Password == password){
-                changeUser(users[x]);
-                return true;
-        }
-    }
-    return false;
-}
-
 /*function changeUser(u){
     user = u;
     filterByUserId();
@@ -168,6 +157,7 @@ function addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, cl
     window.writeClient(newClient, window.user.id);
     clients.push(newClient);
     update();
+    return newClient;
 }
 
 function addPerformedService(clientId, date, workDescription, price, bookingId){
@@ -226,7 +216,7 @@ function getClientAvgExpense(id){
     var expense = parseFloat(getClientTotalExpense(id));
     var services = parseInt(getClientPerformedServices(id));
     if(services != 0)
-        return parseFloat(expense / services);
+        return parseFloat(expense / services).toFixed(2);
     else 
         return 0;
 }
@@ -236,6 +226,8 @@ function getClientGainPercentage(id){
     var totalExpense = getTotalClientExpense();
     if(totalExpense != 0)
         return parseFloat(parseFloat(expense / totalExpense) * 100).toFixed(2);
+    else
+        return 0;
 }
 
 function getClientFirstPerformedService(id){

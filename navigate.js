@@ -214,6 +214,7 @@ function newClientFromNewBooking(){
     newBookingDiv.style.display = "none";
 }
 
+var newClientAdded = null;
 function backNewClient(){
     dismissAllAlertsNewClient();
     clearSetInputNewClient();
@@ -236,7 +237,7 @@ function addNewClient(){
     var clientPhoneNumber = document.getElementById("inputClientPhoneNumber").value;
     var clientBirthYear = document.getElementById("inputClientBirthYear").value;
     if(okClientName){
-        addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear);
+        newClientAdded = addClient(clientName, clientSurname, clientEmail, clientPhoneNumber, clientBirthYear);
         changeSortClients();
         backNewClient();
     }
@@ -246,6 +247,8 @@ function hideNewClientFromNewBooking(){
     newClientDiv.style.display = "none";
     newBookingDiv.style.display = "block";
     fromNewBooking = false;
+    if(newClientAdded != null)
+        uploadSelectClientsById(newClientAdded.Id);
 }
 
 function dismissAlertClientName(){
@@ -332,7 +335,7 @@ function addNewPerformedService(){
     if(okClient && okDate){
         addPerformedService(client, date, workDescription, price, bookingId);
         uploadPerformedServices();
-        uploadClients();
+        changeSortClients();
         backNewPerformedService();
     }
 }

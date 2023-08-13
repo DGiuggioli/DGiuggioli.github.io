@@ -22,15 +22,6 @@ googleSignInDiv.onmouseleave = function(){
 function signIn(){
     var email = document.getElementById("inputEmail").value;
     var password = document.getElementById("inputPassword").value;
-    var found = findUser(email, password);
-    if(found){
-        dismissAlertLogin();
-        showWorkSpaceDivAndNavBar();
-        uploadDataView();
-    }
-    else{
-        userNotFound();
-    }
 }
 
 function googleSignIn(){
