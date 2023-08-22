@@ -77,3 +77,23 @@ function userNotFound(){
 function createAnAccount(){
 
 }
+
+pushState(0);
+
+function pushState(x){
+    if(window.history.state == null || window.history.state.id != x){
+        window.history.pushState({id: x}, x, null);
+        console.log(window.history.state);
+    }
+}
+
+window.onpopstate = () => {
+    console.log(window.history.state);
+    if(window.history.state == null){
+        var exit = window.confirm("Do you really want to leave MyClients?");
+        if(!exit)
+            pushState(0);
+        else
+            window.history.back();
+    }
+}
