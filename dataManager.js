@@ -186,6 +186,16 @@ function newGuid(){
       });
 }
 
+function getNextBooking(id){
+    let x = 0;
+    while(x < pendingBookings.length){
+        if(pendingBookings[x].IdClient == id)
+            return pendingBookings[x].Date;
+        x++;
+    }
+    return null;
+}
+
 function getTotalClientExpense(){
     var expense = 0;
     performedServices.forEach(el =>{

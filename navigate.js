@@ -336,6 +336,7 @@ function addNewPerformedService(){
         addPerformedService(client, date, workDescription, price, bookingId);
         uploadPerformedServices();
         changeSortClients();
+        uploadExpiredBookings();
         backNewPerformedService();
     }
 }
@@ -380,7 +381,7 @@ function editBooking(id){
 function deleteBooking(id){
     if(window.confirm("Are you sure to delete this booking?")){
         removeBooking(id);
-        uploadClients();
+        uploadBookings();
     }
 }
 

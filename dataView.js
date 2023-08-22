@@ -41,7 +41,7 @@ function uploadExpiredBookings(){
             var client = getClientById(el.IdClient);
             expiredBookingsContainer.innerHTML += 
             "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 expiredBookingItem'>" +
-                "<div class='col-10'>" +
+                "<div class='col-7'>" +
                     "<div class='row mt-1 mb-1'>" +
                     "<div class='col'><h3 id='h3" + el.Id + "' onclick='detailClient(\"" + el.Id + "\")' onmouseover='setUnderline(\"h3" + el.Id + "\")' onmouseleave='removeUnderline(\"h3" + el.Id + "\")'>" + client.Name + " " + client.Surname + "</h3></div>" +
                     "</div>" +
@@ -86,7 +86,7 @@ function uploadPendingBookings(){
             var client = getClientById(el.IdClient);
             pendingBookingsContainer.innerHTML += 
             "<div id='" + el.Id + "' class='row border rounded m-2 mb-3 p-1 pendingBookingItem'>" +
-                "<div class='col-10'>" +
+                "<div class='col-8'>" +
                     "<div class='row mt-1 mb-1'>" +
                         "<div class='col'><h3 id='h3" + el.Id + "' onclick='detailClient(\"" + el.IdClient + "\")' onmouseover='setUnderline(\"h3" + el.Id + "\")' onmouseleave='removeUnderline(\"h3" + el.Id + "\")'>" + client.Name + " " + client.Surname + "</h3></div>" +
                     "</div>" +
@@ -154,6 +154,11 @@ function uploadClients(){
     else {
         noClientsDiv.style.display = "none";
         clients.forEach(el =>{
+            var nextBooking = getNextBooking(el.Id);
+            if(nextBooking != null)
+                nextBooking = "Next booking on " + nextBooking;
+            else
+                nextBooking = "<i>No pending bookings</i>";
             clientsContainer.innerHTML +=
             "<div id='" + el.Id + "' class='row border rounded p-2 m-2'>" + 
                 "<div class='col-10 p-1'>" +
@@ -164,7 +169,7 @@ function uploadClients(){
                     "</div> " +
                     "<div class='row'>" +
                         "<div class='col'>" +
-                            "<label>" + getClientPerformedServices(el.Id) + " services</label>" +
+                            "<label>" +  nextBooking + "</label>" +
                         "</div>" +
                     "</div> " +
                 "</div>" +
