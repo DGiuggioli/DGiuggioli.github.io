@@ -97,6 +97,7 @@ function filterPerformedServices(id){
     if(id == null || id == "")
         performedServices = PerformedServices;
     else{
+        performedServices = [];
         for(x = 0; x < PerformedServices.length; x++){
             if(PerformedServices[x].IdClient == id)
                 performedServices.push(PerformedServices[x]);

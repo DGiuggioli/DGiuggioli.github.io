@@ -81,6 +81,10 @@ label {
     font-weight: 400;
 }
 
+.roundedImg {
+    border-radius: 50%;
+}
+
 b {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

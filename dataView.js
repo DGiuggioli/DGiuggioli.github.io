@@ -225,7 +225,7 @@ function uploadSelectClientsPerformedService(){
 }
 
 function uploadSelectFilterPerformedServices(){
-    selectFilterPerformedServices.innerHTML = "<option value=''>Filter by client</option>";
+    selectFilterPerformedServices.innerHTML = "<option value=''>All clients</option>";
     var clientsList = getClietsToFilterPerformedServices();
     clientsList.forEach(el => {
         selectFilterPerformedServices.innerHTML +=

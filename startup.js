@@ -19,6 +19,14 @@ googleSignInDiv.onmouseleave = function(){
     googleSignInDiv.classList.remove("shadow");
 }
 
+async function start(){
+    await populate();
+    showWorkSpaceDivAndNavBar();
+    showHome();
+    uploadDataView();
+    uploadSelectSortClients();
+}
+
 function signIn(){
     var email = document.getElementById("inputEmail").value;
     var password = document.getElementById("inputPassword").value;
@@ -29,6 +37,7 @@ function googleSignIn(){
 }
 
 async function trySetUser(googleUser){
+    var cookieUserId = getCookieUserId();
     if(googleUser != null){
         window.user = {
             id : googleUser.uid,
@@ -37,11 +46,12 @@ async function trySetUser(googleUser){
             phoneNumber : googleUser.phoneNumber,
             photoURL : googleUser.photoURL
         }
-        await populate();
-        showWorkSpaceDivAndNavBar();
-        showHome();
-        uploadDataView();
-        uploadSelectSortClients();
+        writeCookieUser(window.user);
+        start();
+    }
+    else if(cookieUserId != null && cookieUserId != undefined){
+        window.user = getCookieUser();
+        start();
     }
     else
         startingDiv.style.display = "block";

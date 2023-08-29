@@ -97,10 +97,10 @@ function upperContainerHome(){
     workSpaceUpperContainerTitle.innerHTML = "<h1>Bookings</h1>";
     workSpaceUpperContainerMenu.innerHTML = 
     "<div class='row'>" +
-        "<div class='col m-1' title='Profile'>" +
-            "<img src='img/symbol_person.svg' width='35' height='35'>" +
+        "<div class='col' title='Profile'>" +
+            "<img class='roundedImg' src='" + window.user.photoURL+ "' width='35' height='35'>" +
         "</div>" +
-        "<div class='col m-1' onclick='newBooking()' title='New booking'>" +
+        "<div class='col' onclick='newBooking()' title='New booking'>" +
             "<img src='img/symbol_newBooking.svg' width='35' height='35'>" +
         "</div>" +
     "</div>";
@@ -110,10 +110,10 @@ function upperContainerPerformedServices(){
     workSpaceUpperContainerTitle.innerHTML = "<h1>Performed</h1>";
     workSpaceUpperContainerMenu.innerHTML = 
     "<div class='row'>" +
-        "<div class='col m-1' title='View stats'>" +
+        "<div class='col' title='View stats'>" +
             "<img src='img/symbol_chart.svg' width='35' height='35'>" +
         "</div>" +
-        "<div class='col m-1'onclick='newPerformedService()' title='New performed service'>" +
+        "<div class='col'onclick='newPerformedService()' title='New performed service'>" +
             "<img src='img/symbol_addPerformed.svg' width='35' height='35'>" +
         "</div>" +
     "</div>";
@@ -123,7 +123,7 @@ function upperContainerClients(){
     workSpaceUpperContainerTitle.innerHTML = "<h1>Clients</h1>";
     workSpaceUpperContainerMenu.innerHTML = 
     "<div class='row'>" +
-        "<div class='col m-1' onclick='newClient()' title='New client'>" +
+        "<div class='col' onclick='newClient()' title='New client'>" +
             "<img src='img/symbol_addPerson.svg' width='35' height='35'>" +
         "</div>" +
     "</div>";
@@ -338,6 +338,7 @@ function addNewPerformedService(){
         changeSortClients();
         uploadExpiredBookings();
         backNewPerformedService();
+        uploadSelectFilterPerformedServices();
     }
 }
 
