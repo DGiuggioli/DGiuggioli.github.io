@@ -120,6 +120,10 @@ a {
     width: 20vh;
 }
 
+#selectFilterPerformedServices{
+    width: 20vh;
+}
+
 .fixed-top{
     position: fixed;
     top: 0;

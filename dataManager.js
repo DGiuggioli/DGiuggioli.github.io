@@ -1,5 +1,6 @@
 var clients = [];
 var bookings = [];
+var PerformedServices = [];
 var performedServices = [];
 var settings;
 
@@ -13,7 +14,7 @@ async function populate(){
     createDefaultSettings();
     await window.readClients(window.user.id, clients);
     await window.readBookings(window.user.id, bookings);
-    await window.readPerformedServices(window.user.id, performedServices);
+    await window.readPerformedServices(window.user.id, PerformedServices);
     await window.readSettings(window.user.id, settings);
 
     update();
@@ -23,6 +24,7 @@ async function populate(){
 function update(){
     separateBookings();
     sortPerformedServices();
+    filterPerformedServices();
 }
 
 function createDefaultSettings(){
@@ -88,7 +90,18 @@ function sortBookings(){
 }
 
 function sortPerformedServices(){
-    performedServices = performedServices.sort((x, y) => (x.Date < y.Date)? 1 : (x.Date > y.Date) ? -1 : 0)
+    PerformedServices = PerformedServices.sort((x, y) => (x.Date < y.Date)? 1 : (x.Date > y.Date) ? -1 : 0)
+}
+
+function filterPerformedServices(id){
+    if(id == null || id == "")
+        performedServices = PerformedServices;
+    else{
+        for(x = 0; x < PerformedServices.length; x++){
+            if(PerformedServices[x].IdClient == id)
+                performedServices.push(PerformedServices[x]);
+        }
+    }
 }
 
 function dateToString(date){
@@ -175,7 +188,7 @@ function addPerformedService(clientId, date, workDescription, price, bookingId){
         window.writeBooking(booking, window.user.id);
     }
     window.writePerformedService(newPerformedService, window.user.id);
-    performedServices.push(newPerformedService);
+    PerformedServices.push(newPerformedService);
     update();
 }
 
@@ -194,6 +207,25 @@ function getNextBooking(id){
         x++;
     }
     return null;
+}
+
+function getClietsToFilterPerformedServices(){
+    var list = [];
+    clients.forEach(el => {
+        if(clientHasPerformedServices(el.Id))
+            list.push(el);
+    })
+    return list;
+}
+
+function clientHasPerformedServices(id){
+    var x = 0;
+    while(x < PerformedServices.length){
+        if(PerformedServices[x].IdClient == id)
+            return true;
+        x++;
+    }
+    return false;
 }
 
 function getTotalClientExpense(){
@@ -241,10 +273,10 @@ function getClientGainPercentage(id){
 }
 
 function getClientFirstPerformedService(id){
-    var x = performedServices.length - 1;
+    var x = PerformedServices.length - 1;
     while(x >= 0){
-        if(performedServices[x].IdClient == id)
-            return performedServices[x].Date;
+        if(PerformedServices[x].IdClient == id)
+            return PerformedServices[x].Date;
         x--;
     }
     if(x < 0)
@@ -253,12 +285,12 @@ function getClientFirstPerformedService(id){
 
 function getClientLastPerformedService(id){
     var x = 0;
-    while(x < performedServices.length){
-        if(performedServices[x].IdClient == id)
-            return performedServices[x].Date;
+    while(x < PerformedServices.length){
+        if(PerformedServices[x].IdClient == id)
+            return PerformedServices[x].Date;
         x++;
     }
-    if(x == performedServices.length)
+    if(x == PerformedServices.length)
         return dateToString(new Date(-8640000000000000));
 }
 

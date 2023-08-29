@@ -11,6 +11,7 @@ var pendingTitle = document.getElementById("pendingTitle");
 var selectSortClients = document.getElementById("selectSortClients");
 var selectClients = document.getElementById("inputClient");
 var selectClientsPerformedService = document.getElementById("inputClientPerformedService");
+var selectFilterPerformedServices = document.getElementById("selectFilterPerformedServices");
 
 function uploadDataView() {
     uploadBookings()
@@ -18,6 +19,7 @@ function uploadDataView() {
     uploadClients();
     uploadSelectClients();
     uploadSelectClientsPerformedService();
+    uploadSelectFilterPerformedServices();
 }
 
 function uploadBookings(){
@@ -128,7 +130,7 @@ function uploadPerformedServices (){
         performedServices.forEach(el => {
             var client = getClientById(el.IdClient);
             performedServicesContainer.innerHTML +=
-                "<div class='row border rounded pt-1 pb-1 m-2'>" +
+                "<div class='row border rounded pt-2 pb-2 m-2'>" +
                     "<div class='col-4 d-flex justify-content-start'>" +
                         "<label>" + el.Date.split(" ")[0] + "</label>" +
                     "</div>" +
@@ -150,9 +152,11 @@ function uploadClients(){
     clientsContainer.innerHTML = "";
     if(clients.length == 0){
         noClientsDiv.style.display = "block";
+        document.getElementById("sortClientsSelectContainer").style.display = "none";
     }
     else {
         noClientsDiv.style.display = "none";
+        document.getElementById("sortClientsSelectContainer").style.display = "block";
         clients.forEach(el =>{
             var nextBooking = getNextBooking(el.Id);
             if(nextBooking != null)
@@ -218,6 +222,15 @@ function uploadSelectClientsPerformedService(){
         selectClientsPerformedService.innerHTML += 
         "<option value='" + el.Id +"'>" + el.Name + " " + el.Surname + "</option>";
     });
+}
+
+function uploadSelectFilterPerformedServices(){
+    selectFilterPerformedServices.innerHTML = "<option value=''>Filter by client</option>";
+    var clientsList = getClietsToFilterPerformedServices();
+    clientsList.forEach(el => {
+        selectFilterPerformedServices.innerHTML +=
+        "<option value='" + el.Id +"'>" + el.Name + " " + el.Surname + "</option>";
+    })
 }
 
 function showClientDetail(client){

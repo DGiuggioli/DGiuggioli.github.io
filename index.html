@@ -242,6 +242,13 @@
             <div id="pendingBookings" class="container-fluid"></div>
         </div>
         <div id="PerformedServices" style="display:none;">
+            <div id="filterPerformedServicesContainer" class="container-fluid">
+                <div class="row">
+                    <div class="col m-2">
+                        <select id="selectFilterPerformedServices" class="form-select form-select-sm" onchange="changeFilterPerformedServices()"></select>
+                    </div>
+                </div>
+            </div>
             <div id="noPerformedServices" class="container-fluid" style="display:none;">
                 <div class="row">
                     <div class="col text-center m-5">

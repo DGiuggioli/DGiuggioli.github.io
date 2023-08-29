@@ -416,3 +416,8 @@ function backDetailClient(){
     detailClientDiv.style.display = "none";
     showWorkSpaceDivAndNavBar();
 }
+
+function changeFilterPerformedServices(){
+    filterPerformedServices(selectFilterPerformedServices.value);
+    uploadPerformedServices(); 
+}
