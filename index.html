@@ -631,15 +631,11 @@
                     <h1 id="detailCustomerTitle" class="d-flex align-self-center justify-content-center"></h1>
                 </div>
                 <div class="col-1 d-flex justify-content-center align-self-center">
-                    <div class="dropdown" tabindex="0">
+                    <div class="dropdown">
                         <div style="margin-right: 1rem;">
                             <img src="img/symbol_more.svg" width="30" height="30" title="More actions" onclick="showDropdownMenuClient()">
                         </div>
-                        <div id="dropdownMenuClient" class="dropdown-content rounded" onblur="hideDropdownMenuClient()" tabindex="1">
-                          <button class="dropdown-item btnDropdownItem">Edit</button>
-                          <button class="dropdown-item btnDropdownItem">New booking</button>
-                          <button class="dropdown-item btnDropdownItem">New service</button>
-                          <button class="dropdown-item btnDropdownItem">Delete</button>
+                        <div id="dropdownMenuClient" class="dropdown-content rounded" onmouseover="changeHideClientDropdownPossibility(false)" onmouseleave="changeHideClientDropdownPossibility(true)" onblur="hideDropdownMenuClient()" tabindex="1">
                         </div>
                     </div>
                 </div>

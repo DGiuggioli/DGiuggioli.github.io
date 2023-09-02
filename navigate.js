@@ -107,7 +107,7 @@ function upperContainerHome(){
 }
 
 function upperContainerPerformedServices(){
-    workSpaceUpperContainerTitle.innerHTML = "<h1>Performed</h1>";
+    workSpaceUpperContainerTitle.innerHTML = "<h1>Services</h1>";
     workSpaceUpperContainerMenu.innerHTML = 
     "<div class='row'>" +
         "<div class='col' title='View stats'>" +
@@ -291,11 +291,21 @@ function performedService(id){
     bookingId = booking.Id;
 }
 
+function performedServiceByClient(id){
+    setNewPerformedServiceClient(id);
+    detailClientDiv.style.display = "none";
+    newPerformedServiceDiv.style.display = "block";
+}
+
 function setNewPerformedServiceBookingData(booking){
     document.getElementById("inputDatePerformedService").value = booking.Date;
     document.getElementById("inputWorkDescriptionPerformedService").value = booking.WorkDescription;
+    setNewPerformedServiceClient(booking.IdClient);
+}
+
+function setNewPerformedServiceClient(IdClient){
     document.getElementById("inputClientPerformedService").disabled = true;
-    var client = getClientById(booking.IdClient);
+    var client = getClientById(IdClient);
     document.getElementById("inputClientPerformedService").innerHTML = 
         "<option value='" + client.Id + "'>" + client.Name + " " + client.Surname + "</option>";
 }
@@ -423,6 +433,11 @@ function changeFilterPerformedServices(){
     uploadPerformedServices(); 
 }
 
+var canHideClientDropdown;
+function changeHideClientDropdownPossibility(possibility){
+    canHideClientDropdown = possibility;
+}
+
 function showDropdownMenu(id){
     var dropdown = document.getElementById(id);
     dropdown.style.display = "block";
@@ -438,5 +453,6 @@ function showDropdownMenuClient(){
 }
 
 function hideDropdownMenuClient(){
-    hideDropdownMenu("dropdownMenuClient");
+    if(canHideClientDropdown)
+        hideDropdownMenu("dropdownMenuClient");
 }

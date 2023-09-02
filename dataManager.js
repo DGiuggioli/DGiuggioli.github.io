@@ -231,7 +231,7 @@ function clientHasPerformedServices(id){
 
 function getTotalClientExpense(){
     var expense = 0;
-    performedServices.forEach(el =>{
+    PerformedServices.forEach(el =>{
         expense += parseFloat(el.Price);
     })
     return expense;
@@ -309,8 +309,6 @@ function getClientLastPerformedServiceString(id){
     else
         return date;
 }
-
-
 
 function sortClients(value){
     if(value == clientOrders[0]){

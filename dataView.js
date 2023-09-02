@@ -234,6 +234,12 @@ function uploadSelectFilterPerformedServices(){
 }
 
 function showClientDetail(client){
+document.getElementById("dropdownMenuClient").innerHTML =
+"<button class='dropdown-item btnDropdownItem'>Edit</button>" +
+"<button class='dropdown-item btnDropdownItem'>New booking</button>" +
+"<button class='dropdown-item btnDropdownItem' onclick='performedServiceByClient(\"" + client.Id + "\")'>New service</button>" +
+"<button class='dropdown-item btnDropdownItem'>Delete</button>";
+
     document.getElementById("detailCustomerTitle").innerHTML = client.Name + " " + client.Surname;
 
     email = document.getElementById("detailCustomerEmail");
