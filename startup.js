@@ -54,7 +54,7 @@ async function trySetUser(googleUser){
         start();
     }
     else
-        startingDiv.style.display = "block";
+        googleSignIn();
 }
 
 
