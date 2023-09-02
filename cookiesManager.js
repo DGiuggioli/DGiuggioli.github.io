@@ -5,7 +5,6 @@ readCookies();
 function readCookies(){
     cookieString = document.cookie;
     cookiesArr = cookieString.split(';');
-    console.log(cookiesArr);
 }
 
 function getCookie(cookie){

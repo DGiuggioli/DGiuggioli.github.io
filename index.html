@@ -117,6 +117,7 @@
 </head>
 <body>
     <script src="dataManager.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
     <div id="starting" class="justify-content-center" style="display:none;">
         <div id="signIn">
@@ -630,12 +631,15 @@
                     <h1 id="detailCustomerTitle" class="d-flex align-self-center justify-content-center"></h1>
                 </div>
                 <div class="col-1 d-flex justify-content-center align-self-center">
-                    <div class="dropdown">
-                        <img src="img/symbol_more.svg" width="30" height="30" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                          <button class="dropdown-item" type="button">Action</button>
-                          <button class="dropdown-item" type="button">Another action</button>
-                          <button class="dropdown-item" type="button">Something else here</button>
+                    <div class="dropdown" tabindex="0">
+                        <div style="margin-right: 1rem;">
+                            <img src="img/symbol_more.svg" width="30" height="30" title="More actions" onclick="showDropdownMenuClient()">
+                        </div>
+                        <div id="dropdownMenuClient" class="dropdown-content rounded" onblur="hideDropdownMenuClient()" tabindex="1">
+                          <button class="dropdown-item btnDropdownItem">Edit</button>
+                          <button class="dropdown-item btnDropdownItem">New booking</button>
+                          <button class="dropdown-item btnDropdownItem">New service</button>
+                          <button class="dropdown-item btnDropdownItem">Delete</button>
                         </div>
                     </div>
                 </div>

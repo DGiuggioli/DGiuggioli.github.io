@@ -422,3 +422,21 @@ function changeFilterPerformedServices(){
     filterPerformedServices(selectFilterPerformedServices.value);
     uploadPerformedServices(); 
 }
+
+function showDropdownMenu(id){
+    var dropdown = document.getElementById(id);
+    dropdown.style.display = "block";
+    dropdown.focus();
+}
+function hideDropdownMenu(id){
+    var dropdown = document.getElementById(id);
+    dropdown.style.display = "none";
+}
+
+function showDropdownMenuClient(){
+    showDropdownMenu("dropdownMenuClient");
+}
+
+function hideDropdownMenuClient(){
+    hideDropdownMenu("dropdownMenuClient");
+}
