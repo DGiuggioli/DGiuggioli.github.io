@@ -169,6 +169,7 @@ function addNewBooking(){
         uploadExpiredBookings();
         uploadPendingBookings();
         backNewBooking();
+        uploadClients();
     }
 }
 
@@ -291,10 +292,13 @@ function performedService(id){
     bookingId = booking.Id;
 }
 
+var fromClientDetail = false;
 function performedServiceByClient(id){
+    fromClientDetail = true;
     setNewPerformedServiceClient(id);
     detailClientDiv.style.display = "none";
     newPerformedServiceDiv.style.display = "block";
+    hideDropdownMenu("dropdownMenuClient");
 }
 
 function setNewPerformedServiceBookingData(booking){
@@ -311,9 +315,21 @@ function setNewPerformedServiceClient(IdClient){
 }
 
 function backNewPerformedService(){
+    if(fromClientDetail)
+        backNewPerformedServicePage("Client detail");
+    else
+        backNewPerformedServicePage("Performed services");
+}
+
+function backNewPerformedServicePage(page){
     dismissAllAlertsNewPerformedService();
     clearSetInputNewPerformedService();
-    showWorkSpaceDivAndNavBar();
+    if(page == "Client detail"){
+        detailClientDiv.style.display = "block";
+        newPerformedServiceDiv.style.display = "none";
+    }
+    else
+        showWorkSpaceDivAndNavBar();
 }
 
 var bookingId = null;
@@ -347,7 +363,7 @@ function addNewPerformedService(){
         uploadPerformedServices();
         changeSortClients();
         uploadExpiredBookings();
-        backNewPerformedService();
+        backNewPerformedServicePage("Performed services");
         uploadSelectFilterPerformedServices();
     }
 }
@@ -393,6 +409,7 @@ function deleteBooking(id){
     if(window.confirm("Are you sure to delete this booking?")){
         removeBooking(id);
         uploadBookings();
+        uploadClients();
     }
 }
 
